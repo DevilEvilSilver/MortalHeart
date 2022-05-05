@@ -25,7 +25,7 @@ public class BaseDodgeState : BaseActorState
 
         actorController.animator.Play(dodgeAnim);
         _direction = actorController.transform.forward;
-        actorController.rigidbody.velocity = _direction * distance / duration;
+        actorController.RigidBody.velocity = _direction * distance / duration;
     }
 
     public override void OnUpdate()
@@ -63,7 +63,7 @@ public class BaseDodgeState : BaseActorState
         if (!isInitDir && _timeSinceInit < swtichDirectionTime)
         {
             _direction = new Vector3(ctx.ReadValue<Vector2>().x, 0f, ctx.ReadValue<Vector2>().y);
-            actorController.rigidbody.velocity = _direction * distance / duration;
+            actorController.RigidBody.velocity = _direction * distance / duration;
             Vector3 target = actorController.transform.position + _direction;
             actorController.transform.LookAt(target, Vector3.up);
             isInitDir = true;
@@ -73,6 +73,6 @@ public class BaseDodgeState : BaseActorState
     public override void OnExit()
     {
         base.OnExit();
-        actorController.rigidbody.velocity = Vector2.zero;
+        actorController.RigidBody.velocity = Vector2.zero;
     }
 }

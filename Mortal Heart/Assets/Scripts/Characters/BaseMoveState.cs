@@ -22,7 +22,7 @@ public class BaseMoveState : BaseActorState
     {
         base.OnActionCallback(ctx);
         _direction = new Vector3(ctx.ReadValue<Vector2>().x, 0f, ctx.ReadValue<Vector2>().y);
-        actorController.rigidbody.velocity = _direction * _speed;
+        actorController.RigidBody.velocity = _direction * _speed;
         Vector3 target = actorController.transform.position + _direction;
         actorController.transform.LookAt(target, Vector3.up);
     }
@@ -30,6 +30,6 @@ public class BaseMoveState : BaseActorState
     public override void OnExit()
     {
         base.OnExit();
-        actorController.rigidbody.velocity = Vector2.zero;
+        actorController.RigidBody.velocity = Vector2.zero;
     }
 }

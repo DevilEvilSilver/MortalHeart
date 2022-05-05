@@ -11,8 +11,8 @@ public class MainCharacterController : SerializedMonoBehaviour
     internal bool canTakeDamage = true;
     protected float _health = 100f;
 
-    [Header("Collider")]
-    public Rigidbody rigidbody;
+    //[Header("Collider")]
+    public Rigidbody RigidBody { get; private set; }
 
     [Header("Animations")]
     public Animation animator;

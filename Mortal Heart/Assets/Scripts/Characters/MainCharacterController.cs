@@ -2,6 +2,7 @@
 using UnityEngine.InputSystem;
 using Sirenix.OdinInspector;
 
+[RequireComponent(typeof(Rigidbody))]
 public class MainCharacterController : SerializedMonoBehaviour
 {
     [Header("Info")]
@@ -12,7 +13,15 @@ public class MainCharacterController : SerializedMonoBehaviour
     protected float _health = 100f;
 
     //[Header("Collider")]
-    public Rigidbody RigidBody { get; private set; }
+    private Rigidbody _rigidbody;
+    public Rigidbody RigidBody
+    { get
+        {
+            if (_rigidbody == null)
+                _rigidbody = GetComponent<Rigidbody>();
+            return _rigidbody;
+        }
+    }
 
     [Header("Animations")]
     public Animation animator;
@@ -21,15 +30,15 @@ public class MainCharacterController : SerializedMonoBehaviour
     public string[] allAnimations;
     
     [Header("State Controller")]
-    public BaseIdleState idleState;
-    public BaseDeathState deathState;
+    public BaseActorState idleState;
+    public BaseActorState deathState;
 
     [Space(10)]
-    public BaseMoveState moveState;
-    public BaseDodgeState dodgeState;
-    public BaseAttackState attackState_A;
-    public BaseAttackState attackState_B;
-    public BaseAttackState attackState_C;
+    public BaseActorState moveState;
+    public BaseActorState dodgeState;
+    public BaseActorState attackState_A;
+    public BaseActorState attackState_B;
+    public BaseActorState attackState_C;
 
     protected FSMManager fsm;
 

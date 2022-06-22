@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5082852261253172956}
   m_Father: {fileID: 0}
@@ -43,7 +44,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8207030184153095236}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ade7d234fccc7e4ca293c7f926a83b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 325c1a2dc2e3ae1429bb1eaee907b5af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
@@ -103,13 +104,13 @@ MonoBehaviour:
       Data: roll
     - Name: distance
       Entry: 4
-      Data: 3
+      Data: 5
     - Name: duration
       Entry: 4
       Data: 1.167
     - Name: iframe
       Entry: 4
-      Data: 0.9
+      Data: 0.7
     - Name: swtichDirectionTime
       Entry: 4
       Data: 0.05
@@ -133,10 +134,10 @@ MonoBehaviour:
       Data: 1.4
     - Name: delay
       Entry: 4
-      Data: 0.345
+      Data: 0.333
     - Name: active
       Entry: 4
-      Data: 0.1725
+      Data: 0.16
     - Name: 
       Entry: 8
       Data: 
@@ -157,10 +158,10 @@ MonoBehaviour:
       Data: 1
     - Name: delay
       Entry: 4
-      Data: 0.3
+      Data: 0.4
     - Name: active
       Entry: 4
-      Data: 0.3
+      Data: 0.133
     - Name: 
       Entry: 8
       Data: 
@@ -181,34 +182,34 @@ MonoBehaviour:
       Data: 1.667
     - Name: delay
       Entry: 4
-      Data: 0.6668
+      Data: 0.4
     - Name: active
       Entry: 4
-      Data: 0.1667
+      Data: 0.433
     - Name: 
       Entry: 8
       Data: 
   baseMaxHealth: 100
-  baseSpeed: 5
-  animator: {fileID: 6906453588267702802}
+  baseSpeed: 3
+  animator: {fileID: 1182696172393108646}
   allAnimationClips:
+  - {fileID: -203655887218126122, guid: 0ca4d9685fee37149a936fd5905b4d98, type: 3}
+  - {fileID: -203655887218126122, guid: 1a158e74b4f8c8045871e6d7c739cc77, type: 3}
   - {fileID: -203655887218126122, guid: 9eb3752f06f8b5c4284ceb0f03e01d06, type: 3}
   - {fileID: -203655887218126122, guid: 3640b98096a681046889f6b6319026a4, type: 3}
   - {fileID: -203655887218126122, guid: 0ff2d5a9c154f074ca5fda37c31c2632, type: 3}
-  - {fileID: -203655887218126122, guid: 0ca4d9685fee37149a936fd5905b4d98, type: 3}
-  - {fileID: -203655887218126122, guid: 1a158e74b4f8c8045871e6d7c739cc77, type: 3}
-  - {fileID: -203655887218126122, guid: ca204697df0dc094d9e68a9916bd7553, type: 3}
-  - {fileID: -203655887218126122, guid: 6f6b116201c31484c8c585d01b379fd1, type: 3}
   - {fileID: -203655887218126122, guid: 791f5a0882b221946800ec19bf4546b0, type: 3}
+  - {fileID: -203655887218126122, guid: 6f6b116201c31484c8c585d01b379fd1, type: 3}
+  - {fileID: -203655887218126122, guid: ca204697df0dc094d9e68a9916bd7553, type: 3}
   allAnimations:
+  - run
+  - roll
   - idle
   - hit
   - death
-  - run
-  - roll
-  - attack_1
-  - attack_2
   - attack_3
+  - attack_2
+  - attack_1
 --- !u!54 &330255121107344797
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -605,7 +606,15 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: e411568c6b1d32c4da59d499c5323bec, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: d9a12c749614110478437359cf52bcb6, type: 2}
+      objectReference: {fileID: 9100000, guid: 05167d48335c2c94cbf2a87fb386d6ba, type: 2}
+    - target: {fileID: 5866666021909216657, guid: e411568c6b1d32c4da59d499c5323bec, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: e411568c6b1d32c4da59d499c5323bec, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6038414690906536434, guid: e411568c6b1d32c4da59d499c5323bec, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -652,13 +661,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e411568c6b1d32c4da59d499c5323bec, type: 3}
+--- !u!95 &1182696172393108646 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: e411568c6b1d32c4da59d499c5323bec, type: 3}
+  m_PrefabInstance: {fileID: 4684678536306633015}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5082852261253172956 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e411568c6b1d32c4da59d499c5323bec, type: 3}
-  m_PrefabInstance: {fileID: 4684678536306633015}
-  m_PrefabAsset: {fileID: 0}
---- !u!111 &6906453588267702802 stripped
-Animation:
-  m_CorrespondingSourceObject: {fileID: 2223639932434330405, guid: e411568c6b1d32c4da59d499c5323bec, type: 3}
   m_PrefabInstance: {fileID: 4684678536306633015}
   m_PrefabAsset: {fileID: 0}

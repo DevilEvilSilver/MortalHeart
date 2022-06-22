@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 3520047799994654773}
   - component: {fileID: 4529363425416456608}
   - component: {fileID: 6015132936301583323}
+  - component: {fileID: 2288061401602254604}
   m_Layer: 5
   m_Name: SaveFile
   m_TagString: Untagged
@@ -210,6 +211,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2288061401602254604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2196348598671596951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15f77bdcb91dd1541b066d9d6c1f7a20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveData: {fileID: 0}
+  selectButton: {fileID: 812710714560957150}
+  selectButtonText: {fileID: 5702894705554799586}
 --- !u!1 &2837791180460979472
 GameObject:
   m_ObjectHideFlags: 0

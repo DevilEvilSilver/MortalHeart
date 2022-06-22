@@ -2,27 +2,22 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
+public enum GameState
+{
+    UINavigation = 0, InCombat, Interact
+}
+
 public class GameController : SingletonMonoBehaviour<GameController>
 {
-    public enum GameState
-    {
-        UINavigation = 0, InCombat, OutCombat
-    }
 
     public GameState currentGameState;
 
-    public override void Awake()
+    protected override void Init()
     {
-        if (instance == null)
-        {
-            instance = this as GameController;
-            DontDestroyOnLoad(this.gameObject);
-            SceneManager.sceneLoaded += OnSceneLoad;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        DontDestroyOnLoad(this.gameObject);
+
+        SceneManager.sceneLoaded += OnSceneLoad;
+        InputManager.Instance.Init();
     }
 
     private void OnDestroy()

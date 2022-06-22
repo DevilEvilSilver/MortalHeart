@@ -21,16 +21,21 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : Component
         }
     }
 
-    public virtual void Awake()
+    private void Awake()
     {
         if (instance == null)
         {
             instance = this as T;
-            DontDestroyOnLoad(this.gameObject);
+            Init();
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    protected virtual void Init()
+    {
+
     }
 }

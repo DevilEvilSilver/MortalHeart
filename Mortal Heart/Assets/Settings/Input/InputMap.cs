@@ -560,6 +560,51 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""f3d84e8f-1983-4194-9e58-c0319ce3bfe8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ba47c7a-095f-4cdb-ba67-19271ddfca74"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""1fa39eee-55bf-4f28-be94-cb30788452ec"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""e291b060-f76f-4115-9724-acd8aecbf43b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Tab"",
+                    ""type"": ""Button"",
+                    ""id"": ""ff306ab2-df05-4469-92fd-d87268152b64"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -650,6 +695,61 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e120cbaa-e251-42e2-a347-2942997e7b69"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""522f1d3e-d836-4a29-9b89-94b48877ef3c"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78592e9c-376e-4b75-ac90-20f15d322a90"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4d5beda4-3a71-4fc3-a8e8-359ac34d15e0"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05056fbd-2e5b-43b4-b220-101ea4d50c04"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -700,7 +800,7 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""394700cf-4091-4361-b53c-60f6b74403ae"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -722,7 +822,7 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6e2d5701-2c7f-47fe-9df0-537ff45e8cb1"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -744,7 +844,7 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ccc4e546-8f14-4010-b0d2-8b6e9cbe9b9f"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -779,6 +879,11 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
         m_CommonControl = asset.FindActionMap("CommonControl", throwIfNotFound: true);
         m_CommonControl_Move = m_CommonControl.FindAction("Move", throwIfNotFound: true);
         m_CommonControl_Dodge = m_CommonControl.FindAction("Dodge", throwIfNotFound: true);
+        m_CommonControl_LeftItem = m_CommonControl.FindAction("LeftItem", throwIfNotFound: true);
+        m_CommonControl_RightItem = m_CommonControl.FindAction("RightItem", throwIfNotFound: true);
+        m_CommonControl_UseItem = m_CommonControl.FindAction("UseItem", throwIfNotFound: true);
+        m_CommonControl_Pause = m_CommonControl.FindAction("Pause", throwIfNotFound: true);
+        m_CommonControl_Tab = m_CommonControl.FindAction("Tab", throwIfNotFound: true);
         // Combat
         m_Combat = asset.FindActionMap("Combat", throwIfNotFound: true);
         m_Combat_Attack_A = m_Combat.FindAction("Attack_A", throwIfNotFound: true);
@@ -952,12 +1057,22 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
     private ICommonControlActions m_CommonControlActionsCallbackInterface;
     private readonly InputAction m_CommonControl_Move;
     private readonly InputAction m_CommonControl_Dodge;
+    private readonly InputAction m_CommonControl_LeftItem;
+    private readonly InputAction m_CommonControl_RightItem;
+    private readonly InputAction m_CommonControl_UseItem;
+    private readonly InputAction m_CommonControl_Pause;
+    private readonly InputAction m_CommonControl_Tab;
     public struct CommonControlActions
     {
         private @InputMap m_Wrapper;
         public CommonControlActions(@InputMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_CommonControl_Move;
         public InputAction @Dodge => m_Wrapper.m_CommonControl_Dodge;
+        public InputAction @LeftItem => m_Wrapper.m_CommonControl_LeftItem;
+        public InputAction @RightItem => m_Wrapper.m_CommonControl_RightItem;
+        public InputAction @UseItem => m_Wrapper.m_CommonControl_UseItem;
+        public InputAction @Pause => m_Wrapper.m_CommonControl_Pause;
+        public InputAction @Tab => m_Wrapper.m_CommonControl_Tab;
         public InputActionMap Get() { return m_Wrapper.m_CommonControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -973,6 +1088,21 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 @Dodge.started -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnDodge;
                 @Dodge.performed -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnDodge;
                 @Dodge.canceled -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnDodge;
+                @LeftItem.started -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnLeftItem;
+                @LeftItem.performed -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnLeftItem;
+                @LeftItem.canceled -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnLeftItem;
+                @RightItem.started -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnRightItem;
+                @RightItem.performed -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnRightItem;
+                @RightItem.canceled -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnRightItem;
+                @UseItem.started -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnUseItem;
+                @UseItem.performed -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnUseItem;
+                @UseItem.canceled -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnUseItem;
+                @Pause.started -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnPause;
+                @Tab.started -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnTab;
+                @Tab.performed -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnTab;
+                @Tab.canceled -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnTab;
             }
             m_Wrapper.m_CommonControlActionsCallbackInterface = instance;
             if (instance != null)
@@ -983,6 +1113,21 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 @Dodge.started += instance.OnDodge;
                 @Dodge.performed += instance.OnDodge;
                 @Dodge.canceled += instance.OnDodge;
+                @LeftItem.started += instance.OnLeftItem;
+                @LeftItem.performed += instance.OnLeftItem;
+                @LeftItem.canceled += instance.OnLeftItem;
+                @RightItem.started += instance.OnRightItem;
+                @RightItem.performed += instance.OnRightItem;
+                @RightItem.canceled += instance.OnRightItem;
+                @UseItem.started += instance.OnUseItem;
+                @UseItem.performed += instance.OnUseItem;
+                @UseItem.canceled += instance.OnUseItem;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+                @Tab.started += instance.OnTab;
+                @Tab.performed += instance.OnTab;
+                @Tab.canceled += instance.OnTab;
             }
         }
     }
@@ -1078,6 +1223,11 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
+        void OnLeftItem(InputAction.CallbackContext context);
+        void OnRightItem(InputAction.CallbackContext context);
+        void OnUseItem(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+        void OnTab(InputAction.CallbackContext context);
     }
     public interface ICombatActions
     {

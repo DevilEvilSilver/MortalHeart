@@ -9,20 +9,20 @@ public class GameplayScreen : SingletonMonoBehaviour<GameplayScreen>
 {
     [Header("Health")]
     public Image hpProgress;
-    public TextMeshPro hpText;
+    public TMP_Text hpText;
 
     [Header("Item")]
     public Image itemIcon;
-    public TextMeshPro itemAmount;
+    public TMP_Text itemAmount;
 
     [Header("Money")]
-    public TextMeshPro moneyAmount;
+    public TMP_Text moneyAmount;
 
     public void OnHPChange(int value, int max)
     {
         hpText.text = value + "/" + max;
         hpProgress.transform.DOKill();
-        hpProgress.transform.DOScaleX(value / max, 0.5f);
+        hpProgress.transform.DOScaleX((float)value / max, 0.5f);
     }
 
     public void OnItemChange(Sprite icon, int amount)

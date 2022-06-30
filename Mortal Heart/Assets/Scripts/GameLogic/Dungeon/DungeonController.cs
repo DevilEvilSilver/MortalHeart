@@ -3,22 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class RoomProperties
-{
-    public Vector2Int index;
-    public bool isActive;
-    public List<Vector2Int> nextRooms;
-    //room type
-
-    public RoomProperties(int x, int y)
-    {
-        index = new Vector2Int(x, y);
-        isActive = false;
-
-        nextRooms = new List<Vector2Int>();
-    }
-}
-
 public class DungeonController : SingletonMonoBehaviour<DungeonController>
 {
     [SerializeField] private GameObject _player;

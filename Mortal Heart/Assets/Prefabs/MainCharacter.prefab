@@ -1,5 +1,66 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7056942668509575112
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6314772184719800188}
+  - component: {fileID: 5807107010795184610}
+  - component: {fileID: 6115831726875838269}
+  m_Layer: 8
+  m_Name: AxeCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6314772184719800188
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7056942668509575112}
+  m_LocalRotation: {x: -0, y: 0.17407285, z: -0, w: 0.9847328}
+  m_LocalPosition: {x: 0.547, y: 0, z: 0.554}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8790589113055053484}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 20.049, z: 0}
+--- !u!114 &5807107010795184610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7056942668509575112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46d2e3660d4310845b0e76b0e533bdcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+--- !u!65 &6115831726875838269
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7056942668509575112}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4, y: 0.1, z: 1}
+  m_Center: {x: 0.1, y: 0, z: 0}
 --- !u!1 &8207030184153095236
 GameObject:
   m_ObjectHideFlags: 0
@@ -52,6 +113,7 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 759223952834186112}
+    - {fileID: 5807107010795184610}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -119,7 +181,7 @@ MonoBehaviour:
       Data: 
     - Name: attackState_A
       Entry: 7
-      Data: 4|BaseAttackState, Assembly-CSharp
+      Data: 4|CharacterSkillMelee, Assembly-CSharp
     - Name: actorControllerForEditor
       Entry: 10
       Data: 0
@@ -138,6 +200,15 @@ MonoBehaviour:
     - Name: active
       Entry: 4
       Data: 0.16
+    - Name: hitCollider
+      Entry: 10
+      Data: 1
+    - Name: setDamage
+      Entry: 5
+      Data: true
+    - Name: damage
+      Entry: 4
+      Data: 100
     - Name: 
       Entry: 8
       Data: 
@@ -190,7 +261,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   baseMaxHealth: 100
-  baseSpeed: 3
+  baseSpeed: 4
   animator: {fileID: 1182696172393108646}
   allAnimationClips:
   - {fileID: -203655887218126122, guid: 0ca4d9685fee37149a936fd5905b4d98, type: 3}
@@ -669,5 +740,10 @@ Animator:
 --- !u!4 &5082852261253172956 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e411568c6b1d32c4da59d499c5323bec, type: 3}
+  m_PrefabInstance: {fileID: 4684678536306633015}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8790589113055053484 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -5116897903442120805, guid: e411568c6b1d32c4da59d499c5323bec, type: 3}
   m_PrefabInstance: {fileID: 4684678536306633015}
   m_PrefabAsset: {fileID: 0}

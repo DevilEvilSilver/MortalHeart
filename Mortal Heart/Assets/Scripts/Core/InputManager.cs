@@ -14,6 +14,8 @@ public class InputManager : Singleton<InputManager>
 
     internal InputAction moveAction;
     internal InputAction dodgeAction;
+    internal InputAction leftItemAction;
+    internal InputAction rightItemAction;
     internal InputAction attackAction_A;
     internal InputAction attackAction_B;
     internal InputAction attackAction_C;
@@ -28,12 +30,16 @@ public class InputManager : Singleton<InputManager>
         _interactMap = _inputMap.Interact;
 
         moveAction = _inputMap.CommonControl.Move;
+        leftItemAction = _inputMap.CommonControl.LeftItem;
+        rightItemAction = _inputMap.CommonControl.RightItem;
         dodgeAction = _inputMap.CommonControl.Dodge;
         attackAction_A = _inputMap.Combat.Attack_A;
         attackAction_B = _inputMap.Combat.Attack_B;
         attackAction_C = _inputMap.Combat.Attack_C;
 
         moveAction.Enable();
+        leftItemAction.Enable();
+        rightItemAction.Enable();
         dodgeAction.Enable();
         attackAction_A.Enable();
         attackAction_B.Enable();

@@ -15,15 +15,20 @@ public class BaseRoom : MonoBehaviour
     [SerializeField] protected EntranceDoor[] entranceDoors;
     [SerializeField] protected ExitDoor[] exitDoors;
     [SerializeField] protected Transform[] spawnZones;
+    [SerializeField] protected Transform[] enemyZones;
+    [SerializeField] protected BaseEnemyController[] enemies;
+    [SerializeField] protected Vector2Int enemiesCount;
 
     protected EntranceDoor _currentEntrance;
     protected ExitDoor[] _currenExits;
+    protected int _enemiesCount;
 
     protected RoomState _roomState;
     private CinemachineVirtualCamera _camera;
 
     protected void Awake()
     {
+        _enemiesCount = 0;
         _roomState = RoomState.Spawned;
         _camera = Camera.main.GetComponent<CinemachineVirtualCamera>();
 
@@ -78,6 +83,35 @@ public class BaseRoom : MonoBehaviour
 
         // player
         SpawnPlayer(player, spawnPos);
+
+        // enemies
+        int count = Random.Range(enemiesCount.x, enemiesCount.y + 1);
+        _enemiesCount = count;
+        for (int j = 0; j < count; j++)
+        {
+            var zone = enemyZones[Random.Range(0, enemyZones.Length)];
+            var e = SimplePool.Spawn(
+                GetRandomEnemy().gameObject,
+                zone.position,
+                zone.rotation);
+
+            e.GetComponent<BaseEnemyController>().Init(OnEnemyDeath);
+        }
+    }
+
+    private BaseEnemyController GetRandomEnemy()
+    {
+        return enemies[Random.Range(0, enemies.Length)];
+    }
+
+    private void OnEnemyDeath()
+    {
+        _enemiesCount--;
+        InventorySystem.Instance.UpdatePlayerMoney(10);
+        if (_enemiesCount <= 0)
+        {
+            SetNormalState();
+        }
     }
 
     [Button("Combat")]
@@ -107,7 +141,14 @@ public class BaseRoom : MonoBehaviour
     public void ExitRoom(RoomProperties nextRoom)
     {
         DungeonController.Instance.GoToNextRoom(nextRoom);
-        SceneManager.LoadScene(GameUtils.SceneName.GAMEPLAY, LoadSceneMode.Single);
+
+        switch (nextRoom.type)
+        {
+            default:
+            case RoomType.Normal:
+                SceneManager.LoadScene(GameUtils.SceneName.GAMEPLAY, LoadSceneMode.Single);
+                break;
+        }
     }
 
     public void SpawnPlayer(GameObject player, int spawnPos = 0)

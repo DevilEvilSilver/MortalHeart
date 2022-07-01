@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: SaveData_2
   m_EditorClassIdentifier: 
   isNewSaveData: 0
+  baseMaxHealth: 100
+  baseSpeed: 5

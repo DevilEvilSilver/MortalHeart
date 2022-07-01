@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aa96eead4211bf46a0b236a7da22194, type: 3}
-  m_Name: SaveData_3
+  m_Script: {fileID: 11500000, guid: 985ba3c4918199945ab70b95318d677e, type: 3}
+  m_Name: PlayerData
   m_EditorClassIdentifier: 
-  isNewSaveData: 1
-  baseMaxHealth: 100
-  baseSpeed: 5
+  Hp: 0
+  Speed: 5

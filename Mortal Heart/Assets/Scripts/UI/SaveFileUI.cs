@@ -37,7 +37,8 @@ public class SaveFileUI : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene(GameUtils.SceneName.GAMEPLAY, LoadSceneMode.Single);
+        GameController.Instance.LoadSaveData(saveData);
         InventorySystem.Instance.InitState();
+        SceneManager.LoadScene(GameUtils.SceneName.GAMEPLAY, LoadSceneMode.Single);
     }
 }

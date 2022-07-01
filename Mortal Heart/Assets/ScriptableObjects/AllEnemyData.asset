@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aa96eead4211bf46a0b236a7da22194, type: 3}
-  m_Name: SaveData_3
+  m_Script: {fileID: 11500000, guid: 4464a95567ad00a40932e8ad1acc454d, type: 3}
+  m_Name: AllEnemyData
   m_EditorClassIdentifier: 
-  isNewSaveData: 1
-  baseMaxHealth: 100
-  baseSpeed: 5
+  EnemyList:
+  - enemy: {fileID: 5189316332874381361, guid: 30639d73752a10b4c829039cdffddfa3, type: 3}
+    type: 0
+    floor: 1

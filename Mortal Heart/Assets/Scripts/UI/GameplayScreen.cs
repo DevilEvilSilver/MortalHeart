@@ -18,11 +18,11 @@ public class GameplayScreen : SingletonMonoBehaviour<GameplayScreen>
     [Header("Money")]
     public TMP_Text moneyAmount;
 
-    public void OnHPChange(int value, int max)
+    public void OnHPChange(float value, float max, bool isAnim)
     {
-        hpText.text = value + "/" + max;
+        hpText.text = Mathf.CeilToInt(value) + "/" + Mathf.CeilToInt(max);
         hpProgress.transform.DOKill();
-        hpProgress.transform.DOScaleX((float)value / max, 0.5f);
+        hpProgress.transform.DOScaleX(value / max, isAnim ? 0.5f : 0f);
     }
 
     public void OnItemChange(Sprite icon, int amount)

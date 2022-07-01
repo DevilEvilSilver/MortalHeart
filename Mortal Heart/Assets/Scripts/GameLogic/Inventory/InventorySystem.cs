@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Sirenix.OdinInspector;
 
 public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
@@ -24,7 +25,6 @@ public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
         _itemDictionary = new Dictionary<string, InventoryItemStack>();
         money = 0;
         currentItemIndex = 0;
-        GameplayScreen.instance.OnMoneyChange(money);
         InputManager.Instance.leftItemAction.performed += ctx =>
         {
             ChangeItem(-1);
@@ -33,6 +33,14 @@ public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
         {
             ChangeItem(1);
         };
+        if (SceneManager.GetActiveScene().name.Equals(GameUtils.SceneName.GAMEPLAY))
+        {
+            OnChangeScene();
+        }
+    }
+
+    public void OnChangeScene()
+    {
         UpdatePlayerMoney(0);
         UpdateItemData();
     }
@@ -111,7 +119,7 @@ public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
 
     private void UpdateItemData()
     {
-        if (inventory[currentItemIndex] != null)
+        if (inventory.Count > 0 && inventory[currentItemIndex] != null)
             GameplayScreen.instance.
                 OnItemChange(inventory[currentItemIndex].data.icon, inventory[currentItemIndex].stackSize);
     }

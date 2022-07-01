@@ -74,6 +74,15 @@ public class EnemySkillMelee : BaseEnemyAttackState
 
         _disposable?.Dispose();
         if (_attackCoroutine != null)
-            actorController.StopCoroutine(StartAttack());
+            actorController.StopCoroutine(_attackCoroutine);
+    }
+
+    public override void OnStop()
+    {
+        base.OnStop();
+
+        _disposable?.Dispose();
+        if (_attackCoroutine != null)
+            actorController.StopCoroutine(_attackCoroutine);
     }
 }

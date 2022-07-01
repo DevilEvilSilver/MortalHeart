@@ -10,7 +10,7 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
     [SerializeField] private int iterateTimes;
     [SerializeField] private int width, height;
 
-    //private int _currentFloor;
+    private int _currentFloor;
     private RoomProperties _previousRoom;
     private RoomProperties _currentRoom;
     private RoomProperties[,] _map;
@@ -26,16 +26,24 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
         {
             for (int j = 0; j < height; j++)
             {
-                _map[i, j] = new RoomProperties(i, j);
+                _map[i, j] = new RoomProperties(i, j, RoomType.Normal);
             }
         }
     }
 
     public void InitDungeon()
     {
+        _currentFloor = 1;
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                _map[i, j].isActive = false;
+            }
+        }
         _isInit = true;
-        _previousRoom = new RoomProperties(width / 2, -2);
-        _currentRoom = new RoomProperties(width / 2, -1);
+        _previousRoom = new RoomProperties(width / 2, -2, RoomType.Normal);
+        _currentRoom = new RoomProperties(width / 2, -1, RoomType.Normal);
         _currentRoom.isActive = true;
         GenerateDungeon(_currentRoom);
     }
@@ -44,6 +52,11 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
     {
         _previousRoom = _currentRoom;
         _currentRoom = nextRoom;
+    }
+
+    public void GoToNextFloor()
+    {
+        _isInit = false;
     }
 
     public RoomProperties GetRoomProperties(Vector2Int index)
@@ -78,7 +91,9 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
         var yPrevious = previous.index.y;
         if (yPrevious > height - 2)
         {
-            previous.nextRooms.Add(new Vector2Int(width / 2, height));
+            previous.nextRooms.Add(new Vector2Int(-999, -999));
+            previous.isActive = true;
+            //previous.type = RoomType.Boss;
             return;
         }
 
@@ -111,6 +126,6 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
             InitDungeon();
 
         var room = SimplePool.Spawn(_roomPrefab.gameObject, Vector3.zero, Quaternion.identity);
-        room.GetComponent<BaseRoom>().Init(_player, _currentRoom, _previousRoom);
+        room.GetComponent<BaseRoom>().Init(_player, _currentFloor, _currentRoom, _previousRoom);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -10,8 +12,10 @@ public class BaseEnemyController : SerializedMonoBehaviour, IHeath
     public float baseMaxHealth;
     public float baseSpeed;
     public float idleTime;
+    public Vector2 idleOffset;
 
     internal bool canTakeDamage = true;
+    internal bool isActive = false;
     protected float _health = 100f;
 
     protected float _currentIdleTime = 0f;
@@ -37,6 +41,10 @@ public class BaseEnemyController : SerializedMonoBehaviour, IHeath
             return _agent;
         }
     }
+
+    [Header("UI")]
+    public Canvas hpCanvas;
+    public Image hpProgress;
 
     [Header("Animations")]
     public Animator animator;
@@ -85,6 +93,7 @@ public class BaseEnemyController : SerializedMonoBehaviour, IHeath
     public void Kill()
     {
         _health = -1f;
+        ChangeHp(_health, baseMaxHealth);
     }
 
 #endif
@@ -115,11 +124,15 @@ public class BaseEnemyController : SerializedMonoBehaviour, IHeath
     public void Init(Action deathAction)
     {
         OnEnemyDeath += deathAction;
+        _currentIdleTime = idleTime + UnityEngine.Random.Range(idleOffset.x, idleOffset.y);
+        isActive = false;
     }
 
     protected void OnEnable()
     {
         _health = baseMaxHealth;
+        hpProgress.transform.DOScaleX(1f, 0f);
+
         _currentIdleTime = idleTime;
     }
 
@@ -130,14 +143,18 @@ public class BaseEnemyController : SerializedMonoBehaviour, IHeath
 
     private void FixedUpdate()
     {
+        if (!isActive) return;
+
         fsm.OnFixedUpdate();
     }
 
     protected void Update()
     {
+        if (!isActive) return;
+
         if (_health <= 0f)
         {
-            fsm.ChangeState(deathState);
+            fsm.ChangeState(deathState, true);
         }
 
         if (fsm.currentState == idleState)
@@ -154,13 +171,25 @@ public class BaseEnemyController : SerializedMonoBehaviour, IHeath
 
     public void ChangeToIdle(float idleTime)
     {
-        _currentIdleTime = idleTime;
+        _currentIdleTime = idleTime + UnityEngine.Random.Range(idleOffset.x, idleOffset.y);
         fsm.ChangeState(idleState, true);
     }
 
     public void TakeDamage(float damage)
     {
         if (canTakeDamage)
-            _health -= damage;
+        {
+            _health -= damage; 
+            if (_health < 0f)
+                _health = 0f;
+            ChangeHp(_health, baseMaxHealth);
+        }
+    }
+
+    public void ChangeHp(float value, float max, bool isAnim = true)
+    {
+        hpCanvas.gameObject.SetActive(true);
+        hpProgress.transform.DOKill();
+        hpProgress.transform.DOScaleX(value / max, isAnim ? 0.5f : 0f);
     }
 }

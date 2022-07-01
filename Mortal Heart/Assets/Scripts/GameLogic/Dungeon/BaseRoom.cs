@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -16,19 +15,20 @@ public class BaseRoom : MonoBehaviour
     [SerializeField] protected ExitDoor[] exitDoors;
     [SerializeField] protected Transform[] spawnZones;
     [SerializeField] protected Transform[] enemyZones;
-    [SerializeField] protected BaseEnemyController[] enemies;
+    [SerializeField] protected AllEnemyData enemies;
     [SerializeField] protected Vector2Int enemiesCount;
 
     protected EntranceDoor _currentEntrance;
     protected ExitDoor[] _currenExits;
-    protected int _enemiesCount;
+    protected BaseEnemyController[] _enemyList;
+    protected int _aliveEnemyCount;
 
     protected RoomState _roomState;
     private CinemachineVirtualCamera _camera;
 
     protected void Awake()
     {
-        _enemiesCount = 0;
+        _aliveEnemyCount = 0;
         _roomState = RoomState.Spawned;
         _camera = Camera.main.GetComponent<CinemachineVirtualCamera>();
 
@@ -42,7 +42,7 @@ public class BaseRoom : MonoBehaviour
         }
     }
 
-    public void Init(GameObject player, RoomProperties currentRoom, RoomProperties previousRoom)
+    public void Init(GameObject player, int currentFloor, RoomProperties currentRoom, RoomProperties previousRoom)
     {
 
 #if UNITY_EDITOR
@@ -85,30 +85,42 @@ public class BaseRoom : MonoBehaviour
         SpawnPlayer(player, spawnPos);
 
         // enemies
-        int count = Random.Range(enemiesCount.x, enemiesCount.y + 1);
-        _enemiesCount = count;
-        for (int j = 0; j < count; j++)
+        if (currentRoom.type == RoomType.Normal)
         {
-            var zone = enemyZones[Random.Range(0, enemyZones.Length)];
-            var e = SimplePool.Spawn(
-                GetRandomEnemy().gameObject,
-                zone.position,
-                zone.rotation);
+            int count = Random.Range(enemiesCount.x, enemiesCount.y + 1);
+            _enemyList = new BaseEnemyController[count];
+            _aliveEnemyCount = count;
+            for (int j = 0; j < count; j++)
+            {
+                var zone = enemyZones[Random.Range(0, enemyZones.Length)];
+                var e = SimplePool.Spawn(
+                    GetRandomNormalEnemy(currentFloor).gameObject,
+                    zone.position + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)),
+                    zone.rotation);
 
-            e.GetComponent<BaseEnemyController>().Init(OnEnemyDeath);
+                _enemyList[j] = e.GetComponent<BaseEnemyController>();
+                _enemyList[j].Init(OnEnemyDeath);
+            }
         }
     }
 
-    private BaseEnemyController GetRandomEnemy()
+    private BaseEnemyController GetRandomNormalEnemy(int floor)
     {
-        return enemies[Random.Range(0, enemies.Length)];
+        var list = enemies.EnemyList;
+        List<BaseEnemyController> normals = new List<BaseEnemyController>();
+        foreach (var enemydata in list)
+        {
+            if (enemydata.floor == floor && enemydata.type == EnemyType.Normal)
+                normals.Add(enemydata.enemy);
+        }
+        return normals[Random.Range(0, normals.Count)];
     }
 
     private void OnEnemyDeath()
     {
-        _enemiesCount--;
+        _aliveEnemyCount--;
         InventorySystem.Instance.UpdatePlayerMoney(10);
-        if (_enemiesCount <= 0)
+        if (_aliveEnemyCount <= 0)
         {
             SetNormalState();
         }
@@ -124,12 +136,17 @@ public class BaseRoom : MonoBehaviour
         {
             door.CloseDoor();
         }
+
+        for (int i = 0; i < _enemyList.Length; i++)
+        {
+            _enemyList[i].isActive = true;
+        }
     }
 
     [Button("Normal")]
     public void SetNormalState()
     {
-        _roomState = RoomState.InCombat;
+        _roomState = RoomState.Normal;
 
         _currentEntrance.CloseDoor();
         foreach (var door in _currenExits)
@@ -141,12 +158,20 @@ public class BaseRoom : MonoBehaviour
     public void ExitRoom(RoomProperties nextRoom)
     {
         DungeonController.Instance.GoToNextRoom(nextRoom);
+        if (nextRoom.index.x < 0)
+        {
+            DungeonController.Instance.GoToNextFloor();
+        }
 
         switch (nextRoom.type)
         {
             default:
             case RoomType.Normal:
+            case RoomType.Boss:
                 SceneManager.LoadScene(GameUtils.SceneName.GAMEPLAY, LoadSceneMode.Single);
+                break;
+            case RoomType.Shop:
+                //SceneManager.LoadScene(GameUtils.SceneName.GAMEPLAY, LoadSceneMode.Single);
                 break;
         }
     }

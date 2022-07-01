@@ -10,9 +10,9 @@ public class RoomProperties
     public List<Vector2Int> nextRooms;
     public RoomType type;
 
-    public RoomProperties(int x, int y)
+    public RoomProperties(int x, int y, RoomType type)
     {
-        type = RoomType.Normal;
+        this.type = type;
         index = new Vector2Int(x, y);
         isActive = false;
 
@@ -22,5 +22,5 @@ public class RoomProperties
 
 public enum RoomType
 {
-    Normal = 0, Shop
+    Normal = 0, Shop, Boss
 }

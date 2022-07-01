@@ -5,12 +5,10 @@ using Sirenix.OdinInspector;
 [RequireComponent(typeof(Rigidbody))]
 public class MainCharacterController : SerializedMonoBehaviour, IHeath
 {
-    protected PlayerData playerData;
-    public float baseMaxHealth;
-    public float baseSpeed;
+    public PlayerData playerData;
 
     internal bool canTakeDamage = true;
-    protected float _health = 100f;
+    protected float baseMaxHealth;
 
     //[Header("Collider")]
     private Rigidbody _rigidbody;
@@ -95,7 +93,7 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
     [Button("Kill")]
     public void Kill()
     {
-        _health = -1f;
+        playerData.Hp = -1f;
     }
 
 #endif
@@ -130,53 +128,18 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
 
     protected void OnEnable()
     {
-        _health = baseMaxHealth;
+        baseMaxHealth = GameController.Instance.currSaveData.baseMaxHealth;
+        ChangeHealth(0f, false);
 
         // move
-        moveAction.performed += ctx =>
-        {
-            // state is changed in fixed update
-            _moveContext = ctx;
-        };
-
-        moveAction.canceled += ctx =>
-        {
-            //animator.SetBool(BOOL_MOVE, false);
-
-            if (fsm.currentState == moveState)
-                ChangeToIdle();
-        };
-
+        moveAction.performed += OnMovePerformed;
+        moveAction.canceled += OnMoveCanceled;
         // dodge
-        dodgeAction.performed += ctx =>
-        {
-            //animator.SetTrigger(TRIGGER_DODGE);
-
-            fsm.ChangeState(dodgeState);
-        };
-
+        dodgeAction.performed += OnDodge;
         // attack
-        attackAction_A.performed += ctx =>
-        {
-            //animator.SetTrigger(TRIGGER_ATTACK_A);
-
-            fsm.ChangeState(attackState_A);
-            ActionCallback(ctx, attackState_A);
-        };
-        attackAction_B.performed += ctx =>
-        {
-            //animator.SetTrigger(TRIGGER_ATTACK_B);
-
-            fsm.ChangeState(attackState_B);
-            ActionCallback(ctx, attackState_B);
-        };
-        attackAction_C.performed += ctx =>
-        {
-            //animator.SetTrigger(TRIGGER_ATTACK_C);
-
-            fsm.ChangeState(attackState_C);
-            ActionCallback(ctx, attackState_C);
-        };
+        attackAction_A.performed += OnAttackA;
+        attackAction_B.performed += OnAttackB;
+        attackAction_C.performed += OnAttackC;
     }
 
     protected void OnDisable()
@@ -184,57 +147,63 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
         fsm.StopCurrentState();
 
         // move
-        moveAction.performed -= ctx =>
-        {
-            // state is changed in fixed update
-            _moveContext = ctx;
-        };
-
-        moveAction.canceled -= ctx =>
-        {
-            //animator.SetBool(BOOL_MOVE, false);
-
-            if (fsm.currentState == moveState)
-                ChangeToIdle();
-        };
-
+        moveAction.performed -= OnMovePerformed;
+        moveAction.canceled -= OnMoveCanceled;
         // dodge
-        dodgeAction.performed -= ctx =>
-        {
-            //animator.SetTrigger(TRIGGER_DODGE);
-
-            fsm.ChangeState(dodgeState);
-        };
-
+        dodgeAction.performed -= OnDodge;
         // attack
-        attackAction_A.performed -= ctx =>
-        {
-            //animator.SetTrigger(TRIGGER_ATTACK_A);
-
-            fsm.ChangeState(attackState_A);
-            ActionCallback(ctx, attackState_A);
-        };
-        attackAction_B.performed -= ctx =>
-        {
-            //animator.SetTrigger(TRIGGER_ATTACK_B);
-
-            fsm.ChangeState(attackState_B);
-            ActionCallback(ctx, attackState_B);
-        };
-        attackAction_C.performed -= ctx =>
-        {
-            //animator.SetTrigger(TRIGGER_ATTACK_C);
-
-            fsm.ChangeState(attackState_C);
-            ActionCallback(ctx, attackState_C);
-        };
+        attackAction_A.performed -= OnAttackA;
+        attackAction_B.performed -= OnAttackB;
+        attackAction_C.performed -= OnAttackC;
     }
+
+    #region InputCallback
+    private void OnMovePerformed(InputAction.CallbackContext ctx)
+    {
+        // state is changed in fixed update
+        _moveContext = ctx;
+    }
+
+    private void OnMoveCanceled(InputAction.CallbackContext ctx)
+    {
+        //animator.SetBool(BOOL_MOVE, false);
+        if (fsm.currentState == moveState)
+            ChangeToIdle();
+    }
+
+    private void OnDodge(InputAction.CallbackContext ctx)
+    {
+        //animator.SetTrigger(TRIGGER_DODGE);
+        fsm.ChangeState(dodgeState);
+    }
+
+    private void OnAttackA(InputAction.CallbackContext ctx)
+    {
+        //animator.SetTrigger(TRIGGER_ATTACK_A);
+        fsm.ChangeState(attackState_A);
+        ActionCallback(ctx, attackState_A);
+    }
+
+    private void OnAttackB(InputAction.CallbackContext ctx)
+    {
+        //animator.SetTrigger(TRIGGER_ATTACK_B);
+        fsm.ChangeState(attackState_B);
+        ActionCallback(ctx, attackState_B);
+    }
+
+    private void OnAttackC(InputAction.CallbackContext ctx)
+    {
+        //animator.SetTrigger(TRIGGER_ATTACK_C);
+        fsm.ChangeState(attackState_C);
+        ActionCallback(ctx, attackState_C);
+    }
+    #endregion
 
     private void FixedUpdate()
     {
         if (moveAction.IsPressed())
         {
-            animator.SetBool(BOOL_MOVE, true);
+            //animator.SetBool(BOOL_MOVE, true);
 
             fsm.ChangeState(moveState);
             ActionCallback(_moveContext, moveState);
@@ -247,8 +216,8 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
 
     protected void Update()
     {
-        if (_health <= 0f)
-            fsm.ChangeState(deathState);
+        if (playerData.Hp <= 0f)
+            fsm.ChangeState(deathState, true);
 
         fsm.OnUpdate();
     }
@@ -286,12 +255,16 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
             state.OnActionCallback(ctx);
     }
 
-    public void ChangeHealth(float change)
+    public void ChangeHealth(float change, bool isAnim = true)
     {
         if (fsm.currentState == deathState) return;
 
-        _health = _health + change < baseMaxHealth ? _health + change : baseMaxHealth;
-        GameplayScreen.Instance.OnHPChange(Mathf.CeilToInt(_health), Mathf.CeilToInt(baseMaxHealth));
+        playerData.Hp += change;
+        if (playerData.Hp > baseMaxHealth)
+            playerData.Hp = baseMaxHealth;
+        else if (playerData.Hp < 0f)
+            playerData.Hp = 0f;
+        GameplayScreen.Instance.OnHPChange(playerData.Hp, baseMaxHealth, isAnim);
     }
 
     public void TakeDamage(float damage)

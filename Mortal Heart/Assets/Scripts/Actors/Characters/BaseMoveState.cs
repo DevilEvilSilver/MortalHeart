@@ -15,7 +15,7 @@ public class BaseMoveState : BaseCharacterState
         base.OnEnter();
         actorController.animator.Play(moveAnim);
         _direction = actorController.transform.forward;
-        _speed = actorController.baseSpeed;
+        _speed = actorController.playerData.Speed;
     }
 
     public override void OnActionCallback(InputAction.CallbackContext ctx)

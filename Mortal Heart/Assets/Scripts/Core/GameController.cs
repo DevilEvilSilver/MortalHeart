@@ -9,8 +9,9 @@ public enum GameState
 
 public class GameController : SingletonMonoBehaviour<GameController>
 {
-
     public GameState currentGameState;
+    public SaveData currSaveData;
+    public PlayerData playerData;
 
     protected override void Init()
     {
@@ -29,7 +30,15 @@ public class GameController : SingletonMonoBehaviour<GameController>
     {
         if (scene.name.Equals(GameUtils.SceneName.GAMEPLAY))
         {
+            InventorySystem.Instance.OnChangeScene();
             DungeonController.Instance.SpawnRoom();
         }
+    }
+
+    public void LoadSaveData(SaveData data)
+    {
+        currSaveData = data;
+        playerData.Hp = data.baseMaxHealth;
+        playerData.Speed = data.baseSpeed;
     }
 }

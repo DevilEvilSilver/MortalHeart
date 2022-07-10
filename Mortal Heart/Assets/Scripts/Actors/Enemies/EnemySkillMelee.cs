@@ -2,7 +2,7 @@
 using System.Collections;
 using UniRx;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 
 public class EnemySkillMelee : BaseEnemyAttackState
@@ -23,6 +23,7 @@ public class EnemySkillMelee : BaseEnemyAttackState
     private Coroutine _attackCoroutine;
 
     private Transform _player;
+    private Vector3 _playerPosOffset;
 
     public override void OnEnter()
     {
@@ -31,6 +32,12 @@ public class EnemySkillMelee : BaseEnemyAttackState
         _player = UnityEngine.Object.FindObjectOfType<MainCharacterController>().transform;
         actorController.animator.Play(moveAnim);
         _attackCoroutine = actorController.StartCoroutine(StartAttack());
+
+        _playerPosOffset = new Vector3(UnityEngine.Random.Range(-attackRange / 2f, attackRange / 2f)
+            , 0f
+            , UnityEngine.Random.Range(-attackRange / 2f, attackRange / 2f));
+
+        Debug.Log(_playerPosOffset);
     }
 
     private IEnumerator StartAttack()
@@ -45,22 +52,24 @@ public class EnemySkillMelee : BaseEnemyAttackState
 
         while ((actorController.transform.position - _player.position).magnitude > attackRange)
         {
-            actorController.Agent.SetDestination(_player.position);
-            //actorController.Agent.speed = actorController.baseSpeed;
+            actorController.MoveTo(_player.position + _playerPosOffset, actorController.baseSpeed);
             yield return new WaitForFixedUpdate();
         }
 
-        actorController.transform.LookAt(_player);
-        actorController.animator.Play(attackAnim);
-
-        _disposable = Observable.Timer(TimeSpan.FromSeconds(delay)).Subscribe(_ =>
+        actorController.Agent.isStopped = true;
+        actorController.transform.DOLookAt(_player.position, 0.1f).OnComplete(() =>
         {
-            hitCollider.gameObject.SetActive(true);
-            if (setDamage)
+            actorController.animator.Play(attackAnim);
+
+            _disposable = Observable.Timer(TimeSpan.FromSeconds(delay)).Subscribe(_ =>
             {
-                hitCollider.Init(damage, active);
-            }
-        });
+                hitCollider.gameObject.SetActive(true);
+                if (setDamage)
+                {
+                    hitCollider.Init(damage, active);
+                }
+            });
+        });   
 
         yield return new WaitForSeconds(duration);
 
@@ -72,6 +81,7 @@ public class EnemySkillMelee : BaseEnemyAttackState
     {
         base.OnExit();
 
+        actorController.Agent.isStopped = false;
         _disposable?.Dispose();
         if (_attackCoroutine != null)
             actorController.StopCoroutine(_attackCoroutine);
@@ -81,6 +91,7 @@ public class EnemySkillMelee : BaseEnemyAttackState
     {
         base.OnStop();
 
+        actorController.Agent.isStopped = false;
         _disposable?.Dispose();
         if (_attackCoroutine != null)
             actorController.StopCoroutine(_attackCoroutine);

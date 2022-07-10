@@ -8,14 +8,20 @@ public class InventoryItemStack
 
     public InventoryItemStack(InventoryItemData source)
     {
+        stackSize = 0;
         data = source;
         AddToStack();
     }
 
-    public void AddToStack()
+    public bool AddToStack()
     {
-        stackSize++;
-
+        if (stackSize < data.maxCapacity)
+        {
+            stackSize++;
+            return true;
+        }
+        else
+            return false;
     }
 
     public void RemoveFromStack()

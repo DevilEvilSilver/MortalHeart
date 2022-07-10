@@ -5,7 +5,9 @@ using Sirenix.OdinInspector;
 public class BaseAttackState : BaseCharacterState
 {
     [ValueDropdown("AllAnimations")]
-    public string attacckAnim;
+    public string attackAnim;
+    public bool isComboChain;
+
     public bool isTimeBased;
     [ShowIf("isTimeBased")]
     public float duration;
@@ -14,16 +16,18 @@ public class BaseAttackState : BaseCharacterState
     [ShowIf("isTimeBased")]
     public float active;
 
-    private InputAction _inputAction;
+    protected InputAction.CallbackContext _ctx;
     protected float _timeSinceInit;
+    protected bool _isDodgeCancel;
 
     public override void OnEnter()
     {
         base.OnEnter();
         isLock = true;
         _timeSinceInit = 0f;
+        _isDodgeCancel = false;
 
-        actorController.animator.Play(attacckAnim);
+        actorController.animator.CrossFadeInFixedTime(attackAnim, 0.2f);
     }
 
     public override void OnUpdate()
@@ -43,21 +47,35 @@ public class BaseAttackState : BaseCharacterState
     {
         base.OnFixedUpdate();
 
-        if (isTimeBased && actorController.dodgeAction.IsPressed() && _timeSinceInit > delay + active)
+        if (isComboChain && _timeSinceInit > delay + active)
         {
-            // for combo chain mix dodge
-            actorController.CancelAttackToDodge(this, _inputAction);
+            // dodge
+            if (actorController.dodgeAction.IsPressed())
+            {
+                // for combo chain mix dodge
+                _isDodgeCancel = true;
+                actorController.CancelAttackToDodge(_ctx);
+            }
+
+            // combo chain
+            if (_ctx.action != null && _ctx.action.IsPressed())
+            {
+                actorController.ChainNextCombo(_ctx);
+            }
         }
     }
 
     public override void OnActionCallback(InputAction.CallbackContext ctx)
     {
         base.OnActionCallback(ctx);
-        _inputAction = ctx.action;
+        _ctx = ctx;
     }
 
     public override void OnExit()
     {
         base.OnExit();
+
+        if (isComboChain && !_isDodgeCancel)
+            actorController.skillSetIndex = 0;
     }
 }

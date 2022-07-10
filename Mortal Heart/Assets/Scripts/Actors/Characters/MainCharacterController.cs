@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.AI;
 using Sirenix.OdinInspector;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class MainCharacterController : SerializedMonoBehaviour, IHeath
 {
     public PlayerData playerData;
 
-    internal bool canTakeDamage = true;
+    protected bool canTakeDamage = true;
     protected float baseMaxHealth;
 
     //[Header("Collider")]
@@ -19,6 +21,17 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
             if (_rigidbody == null)
                 _rigidbody = GetComponent<Rigidbody>();
             return _rigidbody;
+        }
+    }
+
+    private NavMeshAgent _agent;
+    public NavMeshAgent Agent
+    {
+        get
+        {
+            if (_agent == null)
+                _agent = GetComponent<NavMeshAgent>();
+            return _agent;
         }
     }
 
@@ -35,27 +48,28 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
     [Space(10)]
     public BaseCharacterState moveState;
     public BaseCharacterState dodgeState;
-    public BaseCharacterState attackState_A;
-    public BaseCharacterState attackState_B;
-    public BaseCharacterState attackState_C;
+    public BaseCharacterState hitState;
+    public BaseCharacterState useItemState;
+    public BaseCharacterState pickUpState;
+    public BaseCharacterState[] skillSet_A;
+    public BaseCharacterState[] skillSet_B;
+    public BaseCharacterState[] skillSet_C;
 
     protected FSMManager fsm;
 
     internal InputAction moveAction;
     internal InputAction dodgeAction;
+    internal InputAction useItemAction;
+
+    internal InputAction pickUpAction;
+
     internal InputAction attackAction_A;
     internal InputAction attackAction_B;
     internal InputAction attackAction_C;
 
     private InputAction.CallbackContext _moveContext;
     internal InputAction chainAttackAction;
-
-    private const string BOOL_MOVE = "move";
-    private const string TRIGGER_DODGE = "dodge";
-    private const string TRIGGER_ATTACK_A = "attack_a";
-    private const string TRIGGER_ATTACK_B = "attack_b";
-    private const string TRIGGER_ATTACK_C = "attack_c";
-    private const string TRIGGER_DEATH = "death";
+    internal int skillSetIndex;
 
 #if UNITY_EDITOR
 
@@ -72,12 +86,27 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
             moveState.actorControllerForEditor = this;
         if (dodgeState != null)
             dodgeState.actorControllerForEditor = this;
-        if (attackState_A != null)
-            attackState_A.actorControllerForEditor = this;
-        if (attackState_B != null)
-            attackState_B.actorControllerForEditor = this;
-        if (attackState_C != null)
-            attackState_C.actorControllerForEditor = this;
+        if (hitState != null)
+            hitState.actorControllerForEditor = this;
+        if (useItemState != null)
+            useItemState.actorControllerForEditor = this;
+        if (pickUpState != null)
+            pickUpState.actorControllerForEditor = this;
+        foreach (var attack in skillSet_A)
+        {
+            if (attack != null)
+                attack.actorControllerForEditor = this;
+        }
+        foreach (var attack in skillSet_B)
+        {
+            if (attack != null)
+                attack.actorControllerForEditor = this;
+        }
+        foreach (var attack in skillSet_C)
+        {
+            if (attack != null)
+                attack.actorControllerForEditor = this;
+        }
     }
 
     [Button("Load Animations")]
@@ -102,6 +131,8 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
     {
         moveAction = InputManager.Instance.moveAction;
         dodgeAction = InputManager.Instance.dodgeAction;
+        useItemAction = InputManager.Instance.useItemAction;
+        pickUpAction = InputManager.Instance.pickUpAction;
         attackAction_A = InputManager.Instance.attackAction_A;
         attackAction_B = InputManager.Instance.attackAction_B;
         attackAction_C = InputManager.Instance.attackAction_C;
@@ -115,12 +146,27 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
             moveState.OnInit(this);
         if (dodgeState != null)
             dodgeState.OnInit(this);
-        if (attackState_A != null)
-            attackState_A.OnInit(this);
-        if (attackState_B != null)
-            attackState_B.OnInit(this);
-        if (attackState_C != null)
-            attackState_C.OnInit(this);
+        if (hitState != null)
+            hitState.OnInit(this);
+        if (useItemState != null)
+            useItemState.OnInit(this);
+        if (pickUpState != null)
+            pickUpState.OnInit(this);
+        foreach (var attack in skillSet_A)
+        {
+            if (attack != null)
+                attack.OnInit(this);
+        }
+        foreach (var attack in skillSet_B)
+        {
+            if (attack != null)
+                attack.OnInit(this);
+        }
+        foreach (var attack in skillSet_C)
+        {
+            if (attack != null)
+                attack.OnInit(this);
+        }
 
         fsm = new FSMManager();
         fsm.ChangeState(idleState);
@@ -130,16 +176,23 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
     {
         baseMaxHealth = GameController.Instance.currSaveData.baseMaxHealth;
         ChangeHealth(0f, false);
+        skillSetIndex = 0;
 
         // move
         moveAction.performed += OnMovePerformed;
         moveAction.canceled += OnMoveCanceled;
         // dodge
         dodgeAction.performed += OnDodge;
+        // useItem
+        useItemAction.performed += OnUseItem;
+        // pickUp
+        pickUpAction.performed += OnPickUp;
         // attack
         attackAction_A.performed += OnAttackA;
         attackAction_B.performed += OnAttackB;
         attackAction_C.performed += OnAttackC;
+
+        OnActive();
     }
 
     protected void OnDisable()
@@ -151,56 +204,101 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
         moveAction.canceled -= OnMoveCanceled;
         // dodge
         dodgeAction.performed -= OnDodge;
+        // useItem
+        useItemAction.performed -= OnUseItem;
+        // pickUp
+        pickUpAction.performed -= OnPickUp;
         // attack
         attackAction_A.performed -= OnAttackA;
         attackAction_B.performed -= OnAttackB;
         attackAction_C.performed -= OnAttackC;
+
+        OnDeactive();
+    }
+
+    protected virtual void OnActive()
+    {
+
+    }
+
+    protected virtual void OnDeactive()
+    {
+
     }
 
     #region InputCallback
-    private void OnMovePerformed(InputAction.CallbackContext ctx)
+    protected virtual void OnMovePerformed(InputAction.CallbackContext ctx)
     {
         // state is changed in fixed update
         _moveContext = ctx;
     }
 
-    private void OnMoveCanceled(InputAction.CallbackContext ctx)
+    protected virtual void OnMoveCanceled(InputAction.CallbackContext ctx)
     {
         //animator.SetBool(BOOL_MOVE, false);
         if (fsm.currentState == moveState)
             ChangeToIdle();
     }
 
-    private void OnDodge(InputAction.CallbackContext ctx)
+    protected virtual void OnDodge(InputAction.CallbackContext ctx)
     {
         //animator.SetTrigger(TRIGGER_DODGE);
         fsm.ChangeState(dodgeState);
     }
 
-    private void OnAttackA(InputAction.CallbackContext ctx)
+    protected virtual void OnUseItem(InputAction.CallbackContext ctx)
     {
+        //animator.SetTrigger(TRIGGER_DODGE);
+        fsm.ChangeState(useItemState);
+    }
+
+    protected virtual void OnPickUp(InputAction.CallbackContext ctx)
+    {
+        //animator.SetTrigger(TRIGGER_DODGE);
+        fsm.ChangeState(pickUpState);
+    }
+
+    protected virtual void OnAttackA(InputAction.CallbackContext ctx)
+    {
+        if (skillSetIndex >= skillSet_A.Length)
+        {
+            skillSetIndex = 0;
+        }
+
         //animator.SetTrigger(TRIGGER_ATTACK_A);
-        fsm.ChangeState(attackState_A);
-        ActionCallback(ctx, attackState_A);
+        fsm.ChangeState(skillSet_A[skillSetIndex]);
+        ActionCallback(ctx, skillSet_A[skillSetIndex]);
     }
 
-    private void OnAttackB(InputAction.CallbackContext ctx)
+    protected virtual void OnAttackB(InputAction.CallbackContext ctx)
     {
+        if (skillSetIndex >= skillSet_B.Length)
+        {
+            skillSetIndex = 0;
+        }
+
         //animator.SetTrigger(TRIGGER_ATTACK_B);
-        fsm.ChangeState(attackState_B);
-        ActionCallback(ctx, attackState_B);
+        fsm.ChangeState(skillSet_B[skillSetIndex]);
+        ActionCallback(ctx, skillSet_B[skillSetIndex]);
     }
 
-    private void OnAttackC(InputAction.CallbackContext ctx)
+    protected virtual void OnAttackC(InputAction.CallbackContext ctx)
     {
+        if (skillSetIndex >= skillSet_C.Length)
+        {
+            skillSetIndex = 0;
+        }
+
         //animator.SetTrigger(TRIGGER_ATTACK_C);
-        fsm.ChangeState(attackState_C);
-        ActionCallback(ctx, attackState_C);
+        fsm.ChangeState(skillSet_C[skillSetIndex]);
+        ActionCallback(ctx, skillSet_C[skillSetIndex]);
     }
     #endregion
 
     private void FixedUpdate()
     {
+        if (!GameController.Instance.IsPlaying) return;
+
         if (moveAction.IsPressed())
         {
             //animator.SetBool(BOOL_MOVE, true);
@@ -214,8 +312,10 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
         fsm.OnFixedUpdate();
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
+        if (!GameController.Instance.IsPlaying) return;
+
         if (playerData.Hp <= 0f)
             fsm.ChangeState(deathState, true);
 
@@ -231,9 +331,9 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
     {
         if (moveAction.IsPressed())
         {
-            animator.SetBool(BOOL_MOVE, true);
+            //animator.SetBool(BOOL_MOVE, true);
 
-            fsm.ChangeState(moveState);
+            fsm.ChangeState(moveState, true);
             ActionCallback(_moveContext, moveState);
             // for changing dodge direction 
             ActionCallback(_moveContext, dodgeState);
@@ -243,10 +343,63 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
         fsm.ChangeState(idleState, true);
     }
 
-    public void CancelAttackToDodge(BaseState nextState, InputAction action)
+    public void CancelAttackToDodge(InputAction.CallbackContext ctx)
     {
-        fsm.ChangeState(dodgeState, nextState, true);
-        chainAttackAction = action;
+        var state = GetNextCombo(ctx.action);
+
+        if (state != null)
+        {
+            fsm.ChangeState(dodgeState, state, true);
+            state.OnActionCallback(ctx);
+            chainAttackAction = ctx.action;
+        }
+    }
+
+    public void ChainNextCombo(InputAction.CallbackContext ctx)
+    {
+        var state = GetNextCombo(ctx.action);
+
+        if (state != null)
+        {
+            fsm.ChangeState(state, true);
+            ActionCallback(ctx, state);
+        }
+    }
+
+    public BaseState GetNextCombo(InputAction action)
+    {
+        skillSetIndex++;
+        if (attackAction_A == action)
+        {
+            if (skillSetIndex >= skillSet_A.Length)
+            {
+                skillSetIndex = 0;
+                return null;
+            }
+
+            return skillSet_A[skillSetIndex];
+        }
+        if (attackAction_B == action)
+        {
+            if (skillSetIndex >= skillSet_B.Length)
+            {
+                skillSetIndex = 0;
+                return null;
+            }
+
+            return skillSet_B[skillSetIndex];
+        }
+        if (attackAction_C == action)
+        {
+            if (skillSetIndex >= skillSet_C.Length)
+            {
+                skillSetIndex = 0;
+                return null;
+            }
+
+            return skillSet_C[skillSetIndex];
+        }
+        return null;
     }
 
     private void ActionCallback(InputAction.CallbackContext ctx, BaseState state)
@@ -267,9 +420,25 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
         GameplayScreen.Instance.OnHPChange(playerData.Hp, baseMaxHealth, isAnim);
     }
 
+    public virtual void ToggleInvulnerable(bool isInvulnerable)
+    {
+        canTakeDamage = !isInvulnerable;
+    }
+
     public void TakeDamage(float damage)
     {
         if (canTakeDamage)
+        {
             ChangeHealth(-damage);
+            if (damage > 0f)
+            {
+                fsm.ChangeState(hitState, true);
+            }
+        }
+    }
+
+    public virtual void OnDealDamage(float damage)
+    {
+
     }
 }

@@ -16,11 +16,11 @@ TagManager:
   - Player
   - Dungeon
   - Enemy
+  - EnemyAttack
+  - PlayerAttack
+  - PlayerShield
   - 
-  - 
-  - 
-  - 
-  - 
+  - Item
   - 
   - 
   - 

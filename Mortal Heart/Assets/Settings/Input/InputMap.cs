@@ -24,6 +24,54 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
     ""name"": ""InputMap"",
     ""maps"": [
         {
+            ""name"": ""CoreInput"",
+            ""id"": ""a301cad9-7513-472f-b7f3-0fdf168553e0"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""e8803bcd-cdda-4cc6-a1f1-23c44e2fc748"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Tab"",
+                    ""type"": ""Button"",
+                    ""id"": ""c76dc49c-e4df-4d8b-8c02-2c322537f2ea"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c10ada0c-4773-4de2-825a-b7342fa3ac2e"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1a8fcaff-6b89-4c40-86d4-6b326dfe3517"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
             ""name"": ""UI"",
             ""id"": ""e68d2dd3-deab-4ddd-93ae-94bce7d36ed1"",
             ""actions"": [
@@ -587,24 +635,6 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Pause"",
-                    ""type"": ""Button"",
-                    ""id"": ""e291b060-f76f-4115-9724-acd8aecbf43b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Tab"",
-                    ""type"": ""Button"",
-                    ""id"": ""ff306ab2-df05-4469-92fd-d87268152b64"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -728,28 +758,6 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                     ""action"": ""UseItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4d5beda4-3a71-4fc3-a8e8-359ac34d15e0"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""05056fbd-2e5b-43b4-b220-101ea4d50c04"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Tab"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -857,12 +865,49 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
         {
             ""name"": ""Interact"",
             ""id"": ""09ef90e2-6526-4866-bebb-676cf9035b39"",
-            ""actions"": [],
-            ""bindings"": []
+            ""actions"": [
+                {
+                    ""name"": ""PickUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""36255927-ae49-4366-946c-ef74506cdecb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""48734e6c-8745-4108-970f-ad5675f02438"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PickUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f84bf8e2-f520-45b0-858d-446ffeb5b422"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PickUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
 }");
+        // CoreInput
+        m_CoreInput = asset.FindActionMap("CoreInput", throwIfNotFound: true);
+        m_CoreInput_Pause = m_CoreInput.FindAction("Pause", throwIfNotFound: true);
+        m_CoreInput_Tab = m_CoreInput.FindAction("Tab", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -882,8 +927,6 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
         m_CommonControl_LeftItem = m_CommonControl.FindAction("LeftItem", throwIfNotFound: true);
         m_CommonControl_RightItem = m_CommonControl.FindAction("RightItem", throwIfNotFound: true);
         m_CommonControl_UseItem = m_CommonControl.FindAction("UseItem", throwIfNotFound: true);
-        m_CommonControl_Pause = m_CommonControl.FindAction("Pause", throwIfNotFound: true);
-        m_CommonControl_Tab = m_CommonControl.FindAction("Tab", throwIfNotFound: true);
         // Combat
         m_Combat = asset.FindActionMap("Combat", throwIfNotFound: true);
         m_Combat_Attack_A = m_Combat.FindAction("Attack_A", throwIfNotFound: true);
@@ -891,6 +934,7 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
         m_Combat_Attack_C = m_Combat.FindAction("Attack_C", throwIfNotFound: true);
         // Interact
         m_Interact = asset.FindActionMap("Interact", throwIfNotFound: true);
+        m_Interact_PickUp = m_Interact.FindAction("PickUp", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -946,6 +990,47 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
     {
         return asset.FindBinding(bindingMask, out action);
     }
+
+    // CoreInput
+    private readonly InputActionMap m_CoreInput;
+    private ICoreInputActions m_CoreInputActionsCallbackInterface;
+    private readonly InputAction m_CoreInput_Pause;
+    private readonly InputAction m_CoreInput_Tab;
+    public struct CoreInputActions
+    {
+        private @InputMap m_Wrapper;
+        public CoreInputActions(@InputMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_CoreInput_Pause;
+        public InputAction @Tab => m_Wrapper.m_CoreInput_Tab;
+        public InputActionMap Get() { return m_Wrapper.m_CoreInput; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CoreInputActions set) { return set.Get(); }
+        public void SetCallbacks(ICoreInputActions instance)
+        {
+            if (m_Wrapper.m_CoreInputActionsCallbackInterface != null)
+            {
+                @Pause.started -= m_Wrapper.m_CoreInputActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_CoreInputActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_CoreInputActionsCallbackInterface.OnPause;
+                @Tab.started -= m_Wrapper.m_CoreInputActionsCallbackInterface.OnTab;
+                @Tab.performed -= m_Wrapper.m_CoreInputActionsCallbackInterface.OnTab;
+                @Tab.canceled -= m_Wrapper.m_CoreInputActionsCallbackInterface.OnTab;
+            }
+            m_Wrapper.m_CoreInputActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+                @Tab.started += instance.OnTab;
+                @Tab.performed += instance.OnTab;
+                @Tab.canceled += instance.OnTab;
+            }
+        }
+    }
+    public CoreInputActions @CoreInput => new CoreInputActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -1060,8 +1145,6 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_CommonControl_LeftItem;
     private readonly InputAction m_CommonControl_RightItem;
     private readonly InputAction m_CommonControl_UseItem;
-    private readonly InputAction m_CommonControl_Pause;
-    private readonly InputAction m_CommonControl_Tab;
     public struct CommonControlActions
     {
         private @InputMap m_Wrapper;
@@ -1071,8 +1154,6 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
         public InputAction @LeftItem => m_Wrapper.m_CommonControl_LeftItem;
         public InputAction @RightItem => m_Wrapper.m_CommonControl_RightItem;
         public InputAction @UseItem => m_Wrapper.m_CommonControl_UseItem;
-        public InputAction @Pause => m_Wrapper.m_CommonControl_Pause;
-        public InputAction @Tab => m_Wrapper.m_CommonControl_Tab;
         public InputActionMap Get() { return m_Wrapper.m_CommonControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1097,12 +1178,6 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 @UseItem.started -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnUseItem;
                 @UseItem.performed -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnUseItem;
                 @UseItem.canceled -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnUseItem;
-                @Pause.started -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnPause;
-                @Pause.performed -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnPause;
-                @Pause.canceled -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnPause;
-                @Tab.started -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnTab;
-                @Tab.performed -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnTab;
-                @Tab.canceled -= m_Wrapper.m_CommonControlActionsCallbackInterface.OnTab;
             }
             m_Wrapper.m_CommonControlActionsCallbackInterface = instance;
             if (instance != null)
@@ -1122,12 +1197,6 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
                 @UseItem.started += instance.OnUseItem;
                 @UseItem.performed += instance.OnUseItem;
                 @UseItem.canceled += instance.OnUseItem;
-                @Pause.started += instance.OnPause;
-                @Pause.performed += instance.OnPause;
-                @Pause.canceled += instance.OnPause;
-                @Tab.started += instance.OnTab;
-                @Tab.performed += instance.OnTab;
-                @Tab.canceled += instance.OnTab;
             }
         }
     }
@@ -1185,10 +1254,12 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
     // Interact
     private readonly InputActionMap m_Interact;
     private IInteractActions m_InteractActionsCallbackInterface;
+    private readonly InputAction m_Interact_PickUp;
     public struct InteractActions
     {
         private @InputMap m_Wrapper;
         public InteractActions(@InputMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PickUp => m_Wrapper.m_Interact_PickUp;
         public InputActionMap Get() { return m_Wrapper.m_Interact; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1198,14 +1269,25 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_InteractActionsCallbackInterface != null)
             {
+                @PickUp.started -= m_Wrapper.m_InteractActionsCallbackInterface.OnPickUp;
+                @PickUp.performed -= m_Wrapper.m_InteractActionsCallbackInterface.OnPickUp;
+                @PickUp.canceled -= m_Wrapper.m_InteractActionsCallbackInterface.OnPickUp;
             }
             m_Wrapper.m_InteractActionsCallbackInterface = instance;
             if (instance != null)
             {
+                @PickUp.started += instance.OnPickUp;
+                @PickUp.performed += instance.OnPickUp;
+                @PickUp.canceled += instance.OnPickUp;
             }
         }
     }
     public InteractActions @Interact => new InteractActions(this);
+    public interface ICoreInputActions
+    {
+        void OnPause(InputAction.CallbackContext context);
+        void OnTab(InputAction.CallbackContext context);
+    }
     public interface IUIActions
     {
         void OnNavigate(InputAction.CallbackContext context);
@@ -1226,8 +1308,6 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
         void OnLeftItem(InputAction.CallbackContext context);
         void OnRightItem(InputAction.CallbackContext context);
         void OnUseItem(InputAction.CallbackContext context);
-        void OnPause(InputAction.CallbackContext context);
-        void OnTab(InputAction.CallbackContext context);
     }
     public interface ICombatActions
     {
@@ -1237,5 +1317,6 @@ public partial class @InputMap : IInputActionCollection2, IDisposable
     }
     public interface IInteractActions
     {
+        void OnPickUp(InputAction.CallbackContext context);
     }
 }

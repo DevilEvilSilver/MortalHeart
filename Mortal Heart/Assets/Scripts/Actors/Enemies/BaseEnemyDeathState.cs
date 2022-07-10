@@ -11,6 +11,7 @@ public class BaseEnemyDeathState : BaseEnemyState
         base.OnEnter();
         isLock = true;
         actorController.GetComponent<Collider>().enabled = false;
+        actorController.Agent.enabled = false;
         actorController.isActive = false;
         actorController.OnEnemyDeath?.Invoke();
         actorController.animator.Play(deathAnim);

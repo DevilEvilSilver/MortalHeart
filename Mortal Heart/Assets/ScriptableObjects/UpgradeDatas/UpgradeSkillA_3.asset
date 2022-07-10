@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f2781f00394634d8881521c50a7874, type: 3}
+  m_Name: UpgradeSkillA_3
+  m_EditorClassIdentifier: 
+  defaultLevel: 0
+  maxLevel: 1
+  level: 0
+  requirements:
+  - {fileID: 11400000, guid: 4c58310d6e2e33644a76cf5d55b87300, type: 2}
+  icon: {fileID: 21300000, guid: 15407581640b92449bb1c718987d3af0, type: 3}
+  description: Character's skill 1 combo 3
+  prices: 01000000

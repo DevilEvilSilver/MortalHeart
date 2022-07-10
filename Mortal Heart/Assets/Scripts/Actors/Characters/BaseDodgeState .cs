@@ -19,11 +19,11 @@ public class BaseDodgeState : BaseCharacterState
     {
         base.OnEnter();
         isLock = true;
-        actorController.canTakeDamage = false;
+        actorController.ToggleInvulnerable(true);
         _timeSinceInit = 0f;
         isInitDir = false;
 
-        actorController.animator.Play(dodgeAnim);
+        actorController.animator.CrossFadeInFixedTime(dodgeAnim, 0.2f);
         _direction = actorController.transform.forward;
         actorController.RigidBody.velocity = _direction * distance / duration;
     }
@@ -35,7 +35,7 @@ public class BaseDodgeState : BaseCharacterState
 
         if (_timeSinceInit > iframe)
         {
-            actorController.canTakeDamage = true;
+            actorController.ToggleInvulnerable(false);
             if (_timeSinceInit > duration)
             {
                 isLock = false;

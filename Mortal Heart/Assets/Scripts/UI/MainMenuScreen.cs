@@ -10,7 +10,7 @@ public class MainMenuScreen : MonoBehaviour
 
     public SaveFileUI[] saveFiles;
 
-    public void OnStart()
+    public void OnChooseSaveFile()
     {
         chooseSaveFileScreen.SetActive(true);
         foreach (var save in saveFiles)
@@ -22,6 +22,16 @@ public class MainMenuScreen : MonoBehaviour
     public void OnOptionSelect()
     {
         optionScreen.SetActive(true);
+    }
+
+    public void OnQuitSaveFile()
+    {
+        chooseSaveFileScreen.SetActive(false);
+    }
+
+    public void OnOptionQuit()
+    {
+        optionScreen.SetActive(false);
     }
 
     public void OnQuit()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Sirenix.OdinInspector;
 
 public class DungeonController : SingletonMonoBehaviour<DungeonController>
@@ -54,9 +55,19 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
         _currentRoom = nextRoom;
     }
 
-    public void GoToNextFloor()
+    public bool GoToNextFloor()
     {
         _isInit = false;
+        _currentFloor++;
+
+        if (_currentFloor >= 3)
+        {
+            SceneManager.LoadScene(GameUtils.SceneName.RESULT, LoadSceneMode.Single);
+            return true;
+        }
+        else
+            return false;
+
     }
 
     public RoomProperties GetRoomProperties(Vector2Int index)
@@ -91,7 +102,7 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
         var yPrevious = previous.index.y;
         if (yPrevious > height - 2)
         {
-            previous.nextRooms.Add(new Vector2Int(-999, -999));
+            previous.nextRooms.Add(new Vector2Int(xPrevious, 999));
             previous.isActive = true;
             //previous.type = RoomType.Boss;
             return;

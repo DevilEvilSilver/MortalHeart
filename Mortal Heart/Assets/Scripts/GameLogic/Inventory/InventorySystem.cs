@@ -6,6 +6,8 @@ using Sirenix.OdinInspector;
 
 public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
 {
+    private readonly int maxUsableCapacity = 5;
+
     private Dictionary<string, InventoryItemStack> _itemDictionary;
     public List<InventoryItemStack> inventory { get; private set; }
     public int money { get; private set; }
@@ -33,21 +35,21 @@ public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
         {
             ChangeItem(1);
         };
-        if (SceneManager.GetActiveScene().name.Equals(GameUtils.SceneName.GAMEPLAY))
-        {
-            OnChangeScene();
-        }
+        OnChangeScene();
     }
 
     public void OnChangeScene()
     {
-        UpdatePlayerMoney(0);
-        UpdateItemData();
+        if (SceneManager.GetActiveScene().name.Equals(GameUtils.SceneName.GAMEPLAY))
+        {
+            UpdatePlayerMoney(0);
+            UpdateItemData();
+        }
     }
 
     private void ChangeItem(int offset)
     {
-        if (inventory == null) return;
+        if (inventory == null || inventory.Count <= 0) return;
 
         currentItemIndex = Mathf.Clamp(currentItemIndex + offset, 0, inventory.Count - 1);
         UpdateItemData();
@@ -62,20 +64,38 @@ public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
         return null;
     }
 
-    public void Add(InventoryItemData itemData)
+    public InventoryItemData GetCurrentItem()
     {
+        if (inventory.Count <= 0 || inventory[currentItemIndex] == null) return null;
+
+        return inventory[currentItemIndex].data;
+    }
+
+    public bool Add(InventoryItemData itemData)
+    {
+        if (inventory.Count >= maxUsableCapacity)
+            return false;
+
         if (_itemDictionary.TryGetValue(itemData.id, out InventoryItemStack value))
         {
-            value.AddToStack();
+            if (value.AddToStack())
+            {
+                itemData.OnAdd();
+                UpdateItemData();
+                return true;
+            }
         }
-        else
+        else if (inventory.Count < maxUsableCapacity)
         {
             InventoryItemStack newItem = new InventoryItemStack(itemData);
             inventory.Add(newItem);
             _itemDictionary.Add(itemData.id, newItem);
+
+            itemData.OnAdd();
+            UpdateItemData();
+            return true;
         }
-        itemData.OnAdd();
-        UpdateItemData();
+        return false;
     }
 
     public void Remove(InventoryItemData itemData)
@@ -97,7 +117,7 @@ public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
     [Button("UseItem")]
     public void UseItem()
     {
-        if (inventory[currentItemIndex] == null) return;
+        if (inventory.Count <= 0 || inventory[currentItemIndex] == null) return;
 
         var item = inventory[currentItemIndex];
         item.RemoveFromStack();

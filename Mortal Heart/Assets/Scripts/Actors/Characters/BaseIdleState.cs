@@ -8,6 +8,6 @@ public class BaseIdleState : BaseCharacterState
     public override void OnEnter()
     {
         base.OnEnter();
-        actorController.animator.Play(idleAnim);
+        actorController.animator.CrossFadeInFixedTime(idleAnim, 0.2f);
     }
 }

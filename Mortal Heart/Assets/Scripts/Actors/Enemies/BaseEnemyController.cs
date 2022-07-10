@@ -192,4 +192,12 @@ public class BaseEnemyController : SerializedMonoBehaviour, IHeath
         hpProgress.transform.DOKill();
         hpProgress.transform.DOScaleX(value / max, isAnim ? 0.5f : 0f);
     }
+
+    public void MoveTo(Vector3 pos, float speed)
+    {
+        Agent.SetDestination(pos);
+        Agent.speed = speed;
+        //transform.DOKill();
+        //transform.DOLookAt(Agent.velocity, 0.1f);
+    }
 }

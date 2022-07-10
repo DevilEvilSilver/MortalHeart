@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 985ba3c4918199945ab70b95318d677e, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  Hp: 0
+  Hp: 80
   Speed: 5
+  PlayTime: 28.186563
+  EnemyKilled: 2

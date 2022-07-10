@@ -2,6 +2,54 @@
     "name": "InputMap",
     "maps": [
         {
+            "name": "CoreInput",
+            "id": "a301cad9-7513-472f-b7f3-0fdf168553e0",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "e8803bcd-cdda-4cc6-a1f1-23c44e2fc748",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Tab",
+                    "type": "Button",
+                    "id": "c76dc49c-e4df-4d8b-8c02-2c322537f2ea",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c10ada0c-4773-4de2-825a-b7342fa3ac2e",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1a8fcaff-6b89-4c40-86d4-6b326dfe3517",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
             "name": "UI",
             "id": "e68d2dd3-deab-4ddd-93ae-94bce7d36ed1",
             "actions": [
@@ -565,24 +613,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Pause",
-                    "type": "Button",
-                    "id": "e291b060-f76f-4115-9724-acd8aecbf43b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Tab",
-                    "type": "Button",
-                    "id": "ff306ab2-df05-4469-92fd-d87268152b64",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -706,28 +736,6 @@
                     "action": "UseItem",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4d5beda4-3a71-4fc3-a8e8-359ac34d15e0",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "05056fbd-2e5b-43b4-b220-101ea4d50c04",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Tab",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
@@ -835,8 +843,41 @@
         {
             "name": "Interact",
             "id": "09ef90e2-6526-4866-bebb-676cf9035b39",
-            "actions": [],
-            "bindings": []
+            "actions": [
+                {
+                    "name": "PickUp",
+                    "type": "Button",
+                    "id": "36255927-ae49-4366-946c-ef74506cdecb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "48734e6c-8745-4108-970f-ad5675f02438",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PickUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f84bf8e2-f520-45b0-858d-446ffeb5b422",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PickUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

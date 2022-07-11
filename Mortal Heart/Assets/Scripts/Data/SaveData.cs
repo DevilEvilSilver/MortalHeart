@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
-using System.Linq;
+using System;
 
 [CreateAssetMenu(fileName = "SaveData", menuName = "ScriptableObjects/SaveData")]
-public class SaveData : SerializedScriptableObject
+public class SaveData : ScriptableObject
 {
     public bool isNewSaveData = true;
     public float baseMaxHealth = 100f;
@@ -14,13 +14,14 @@ public class SaveData : SerializedScriptableObject
     public int money = 0;
     public int enemyKilled = 0;
 
-    public Dictionary<UpgradeData, int> upgradesLevel;
+    [TableList]
+    public List<UpgradeSaveData> upgradesLevel;
 
     public void LoadData()
     {
-        foreach (var upgrade in upgradesLevel)
+        foreach (var save in upgradesLevel)
         {
-            upgrade.Key.level = upgrade.Value;
+            save.upgrade.level = save.level;
         }
     }
 
@@ -34,18 +35,26 @@ public class SaveData : SerializedScriptableObject
         money = 0;
         enemyKilled = 0;
 
-        foreach (var key in upgradesLevel.Keys.ToList())
+        foreach (var save in upgradesLevel)
         {
-            key.ResetData();
-            upgradesLevel[key] = key.level;
+            save.upgrade.ResetData();
+            save.level = save.upgrade.level;
         }
     }
 
     public void SaveUpgrade(UpgradeData upgrade)
     {
-        if (upgradesLevel.TryGetValue(upgrade, out int value))
+        foreach (var save in upgradesLevel)
         {
-            upgradesLevel[upgrade] = upgrade.level;
+            if (save.upgrade == upgrade)
+                save.level = save.upgrade.level;
         }
     }
+}
+
+[Serializable]
+public class UpgradeSaveData
+{
+    public UpgradeData upgrade;
+    public int level;
 }

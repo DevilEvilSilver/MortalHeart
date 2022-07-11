@@ -14,6 +14,8 @@ public class BaseDodgeState : BaseCharacterState
     private Vector3 _direction;
     private bool isInitDir;
     private float _timeSinceInit;
+    protected bool _isComboChained;
+    internal InputAction.CallbackContext comboCtx;
 
     public override void OnEnter()
     {
@@ -22,10 +24,16 @@ public class BaseDodgeState : BaseCharacterState
         actorController.ToggleInvulnerable(true);
         _timeSinceInit = 0f;
         isInitDir = false;
+        _isComboChained = false;
 
         actorController.animator.CrossFadeInFixedTime(dodgeAnim, 0.2f);
         _direction = actorController.transform.forward;
         actorController.RigidBody.velocity = _direction * distance / duration;
+
+        if (actorController.chainAttackAction != null)
+        {
+            actorController.chainAttackAction.performed += OnMixComboChain;
+        }
     }
 
     public override void OnUpdate()
@@ -45,15 +53,14 @@ public class BaseDodgeState : BaseCharacterState
         }
     }
 
-    public override void OnFixedUpdate()
+    private void OnMixComboChain(InputAction.CallbackContext ctx)
     {
-        base.OnFixedUpdate();
-
-        if (actorController.chainAttackAction != null && actorController.chainAttackAction.IsPressed() && _timeSinceInit > iframe)
+        if (_timeSinceInit > iframe)
         {
             // for combo chain mix dodge
-            actorController.GoToNextState(true);
-            actorController.chainAttackAction = null;
+            actorController.chainAttackAction.performed -= OnMixComboChain;
+            _isComboChained = true;
+            actorController.GoToNextState(comboCtx, true);
         }
     }
 
@@ -73,6 +80,15 @@ public class BaseDodgeState : BaseCharacterState
     public override void OnExit()
     {
         base.OnExit();
-        actorController.RigidBody.velocity = Vector2.zero;
+        if (actorController != null)
+            actorController.RigidBody.velocity = Vector2.zero;
+
+        if (actorController.chainAttackAction != null)
+        {
+            actorController.chainAttackAction.performed -= OnMixComboChain;
+            if (!_isComboChained)
+                actorController.skillSetIndex = 0;
+        }
+        actorController.chainAttackAction = null;
     }
 }

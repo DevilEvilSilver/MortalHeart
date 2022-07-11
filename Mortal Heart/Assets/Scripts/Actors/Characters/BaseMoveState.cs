@@ -36,6 +36,7 @@ public class BaseMoveState : BaseCharacterState
     public override void OnExit()
     {
         base.OnExit();
-        actorController.RigidBody.velocity = Vector2.zero;
+        if (actorController != null)
+            actorController.RigidBody.velocity = Vector2.zero;
     }
 }

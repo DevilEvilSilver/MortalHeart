@@ -322,9 +322,13 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
         fsm.OnUpdate();
     }
 
-    public void GoToNextState(bool isByPassLock = false)
+    public void GoToNextState(InputAction.CallbackContext ctx, bool isByPassLock = false)
     {
-        fsm.GoToNextState(isByPassLock);
+        if (fsm.nextState != null)
+        {
+            fsm.GoToNextState(isByPassLock);
+            fsm.currentState.OnActionCallback(ctx);
+        }    
     }
 
     public void ChangeToIdle()
@@ -349,9 +353,9 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
 
         if (state != null)
         {
-            fsm.ChangeState(dodgeState, state, true);
-            state.OnActionCallback(ctx);
+            (dodgeState as BaseDodgeState).comboCtx = ctx;
             chainAttackAction = ctx.action;
+            fsm.ChangeState(dodgeState, state, true);
         }
     }
 

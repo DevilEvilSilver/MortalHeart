@@ -19,6 +19,7 @@ public class BaseAttackState : BaseCharacterState
     protected InputAction.CallbackContext _ctx;
     protected float _timeSinceInit;
     protected bool _isDodgeCancel;
+    protected bool _isComboChained;
 
     public override void OnEnter()
     {
@@ -26,6 +27,7 @@ public class BaseAttackState : BaseCharacterState
         isLock = true;
         _timeSinceInit = 0f;
         _isDodgeCancel = false;
+        _isComboChained = false;
 
         actorController.animator.CrossFadeInFixedTime(attackAnim, 0.2f);
     }
@@ -43,25 +45,24 @@ public class BaseAttackState : BaseCharacterState
         }
     }
 
-    public override void OnFixedUpdate()
+    private void OnDodge(InputAction.CallbackContext ctx)
     {
-        base.OnFixedUpdate();
-
         if (isComboChain && _timeSinceInit > delay + active)
         {
-            // dodge
-            if (actorController.dodgeAction.IsPressed())
-            {
-                // for combo chain mix dodge
-                _isDodgeCancel = true;
-                actorController.CancelAttackToDodge(_ctx);
-            }
+            // for combo chain mix dodge
+            actorController.dodgeAction.performed -= OnDodge;
+            _isDodgeCancel = true;
+            actorController.CancelAttackToDodge(_ctx);
+        }
+    }
 
-            // combo chain
-            if (_ctx.action != null && _ctx.action.IsPressed())
-            {
-                actorController.ChainNextCombo(_ctx);
-            }
+    private void OnComboChain(InputAction.CallbackContext ctx)
+    {
+        if (isComboChain && _timeSinceInit > delay + active)
+        {
+            _ctx.action.performed -= OnComboChain;
+            _isComboChained = true;
+            actorController.ChainNextCombo(_ctx);
         }
     }
 
@@ -69,13 +70,19 @@ public class BaseAttackState : BaseCharacterState
     {
         base.OnActionCallback(ctx);
         _ctx = ctx;
+
+        actorController.dodgeAction.performed += OnDodge;
+        _ctx.action.performed += OnComboChain;
     }
 
     public override void OnExit()
     {
         base.OnExit();
 
-        if (isComboChain && !_isDodgeCancel)
+        actorController.dodgeAction.performed -= OnDodge;
+        _ctx.action.performed -= OnComboChain;
+
+        if (isComboChain && !_isDodgeCancel && !_isComboChained)
             actorController.skillSetIndex = 0;
     }
 }

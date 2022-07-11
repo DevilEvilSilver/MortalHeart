@@ -36,8 +36,6 @@ public class EnemySkillMelee : BaseEnemyAttackState
         _playerPosOffset = new Vector3(UnityEngine.Random.Range(-attackRange / 2f, attackRange / 2f)
             , 0f
             , UnityEngine.Random.Range(-attackRange / 2f, attackRange / 2f));
-
-        Debug.Log(_playerPosOffset);
     }
 
     private IEnumerator StartAttack()

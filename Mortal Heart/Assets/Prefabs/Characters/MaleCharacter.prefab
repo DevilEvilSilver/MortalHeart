@@ -2784,10 +2784,10 @@ MonoBehaviour:
       Data: Dash
     - Name: distance
       Entry: 4
-      Data: 3
+      Data: 3.5
     - Name: duration
       Entry: 4
-      Data: 0.333
+      Data: 0.4
     - Name: iframe
       Entry: 4
       Data: 0.15
@@ -2838,7 +2838,7 @@ MonoBehaviour:
       Data: Lifting
     - Name: animDuration
       Entry: 4
-      Data: 2.067
+      Data: 1.0335
     - Name: itemLayer
       Entry: 7
       Data: UnityEngine.LayerMask, UnityEngine.CoreModule
@@ -2877,13 +2877,13 @@ MonoBehaviour:
       Data: true
     - Name: duration
       Entry: 4
-      Data: 0.533
+      Data: 0.666
     - Name: delay
       Entry: 4
-      Data: 0.066
+      Data: 0.0825
     - Name: active
       Entry: 4
-      Data: 0.266
+      Data: 0.1663
     - Name: hitCollider
       Entry: 10
       Data: 1
@@ -2913,13 +2913,13 @@ MonoBehaviour:
       Data: true
     - Name: duration
       Entry: 4
-      Data: 0.533
+      Data: 0.666
     - Name: delay
       Entry: 4
-      Data: 0.1
+      Data: 0.125
     - Name: active
       Entry: 4
-      Data: 0.233
+      Data: 0.125
     - Name: hitCollider
       Entry: 10
       Data: 1
@@ -2949,13 +2949,13 @@ MonoBehaviour:
       Data: true
     - Name: duration
       Entry: 4
-      Data: 0.533
+      Data: 0.666
     - Name: delay
       Entry: 4
-      Data: 0.1
+      Data: 0.125
     - Name: active
       Entry: 4
-      Data: 0.333
+      Data: 0.4163
     - Name: hitCollider
       Entry: 10
       Data: 1

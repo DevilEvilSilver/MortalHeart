@@ -6,13 +6,16 @@ public class FSMManager
     public BaseState nextState { get; set; }
     public BaseState previousState { get; private set; }
 
+    private bool _isActive;
+
     public FSMManager()
     {
-
+        _isActive = true;
     }
 
     public void OnUpdate()
     {
+        if (!_isActive) return;
         if (currentState == null) return;
 
         currentState.OnUpdate();
@@ -20,6 +23,7 @@ public class FSMManager
 
     public void OnFixedUpdate()
     {
+        if (!_isActive) return;
         if (currentState == null) return;
 
         currentState.OnFixedUpdate();
@@ -27,7 +31,8 @@ public class FSMManager
 
     public void ChangeState(BaseState newState, bool isByPassLock = false)
     {
-        if (newState == currentState) return;
+        if (!_isActive) return;
+        if (!isByPassLock && newState == currentState) return;
 
         if (currentState != null)
         {
@@ -43,7 +48,8 @@ public class FSMManager
 
     public void ChangeState(BaseState newState, BaseState _nextState, bool isByPassLock = false)
     {
-        if (newState == currentState) return;
+        if (!_isActive) return;
+        if (!isByPassLock && newState == currentState) return;
         nextState = _nextState;
 
         ChangeState(newState, isByPassLock);
@@ -54,17 +60,20 @@ public class FSMManager
         if (currentState != null)
         {
             currentState.OnStop();
+            _isActive = false;
         }
     }
 
     public void GoToNextState(bool isByPassLock = false)
     {
+        if (!_isActive) return;
         if (nextState == null) return;
         ChangeState(nextState, isByPassLock);
     }
 
     public void GoToPreviouseState()
     {
+        if (!_isActive) return;
         if (previousState == null) return;
         ChangeState(previousState);
     }

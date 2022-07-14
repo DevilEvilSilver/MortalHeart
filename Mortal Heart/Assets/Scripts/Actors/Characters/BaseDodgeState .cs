@@ -91,4 +91,19 @@ public class BaseDodgeState : BaseCharacterState
         }
         actorController.chainAttackAction = null;
     }
+
+    public override void OnStop()
+    {
+        base.OnStop();
+        if (actorController != null)
+            actorController.RigidBody.velocity = Vector2.zero;
+
+        if (actorController.chainAttackAction != null)
+        {
+            actorController.chainAttackAction.performed -= OnMixComboChain;
+            if (!_isComboChained)
+                actorController.skillSetIndex = 0;
+        }
+        actorController.chainAttackAction = null;
+    }
 }

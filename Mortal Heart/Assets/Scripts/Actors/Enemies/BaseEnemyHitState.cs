@@ -2,10 +2,11 @@
 using System;
 using UniRx;
 
-public class BaseHitState : BaseCharacterState
+public class BaseEnemyHitState : BaseEnemyState
 {
     [ValueDropdown("AllAnimations")]
     public string hitAnim;
+    public float overrideIdleTime;
     public float duration;
 
     private IDisposable _disposable;
@@ -19,7 +20,7 @@ public class BaseHitState : BaseCharacterState
         _disposable = Observable.Timer(TimeSpan.FromSeconds(duration)).Subscribe(_ =>
         {
             isLock = false;
-            actorController.ChangeToIdle();
+            actorController.ChangeToIdle(overrideIdleTime);
             return;
         });
     }

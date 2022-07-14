@@ -14,6 +14,9 @@ public class GameController : SingletonMonoBehaviour<GameController>
     public SaveData currSaveData;
     public PlayerData playerData;
 
+    public UpgradeData healthUpgrade;
+    public UpgradeData speedUpgrade;
+
     public bool IsPlaying { get; private set; }
 
     protected override void Init()

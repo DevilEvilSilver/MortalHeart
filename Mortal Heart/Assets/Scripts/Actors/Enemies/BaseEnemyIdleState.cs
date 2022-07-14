@@ -18,7 +18,7 @@ public class BaseEnemyIdleState : BaseEnemyState
     private Transform _player;
     private Vector3 _playerPosOffset;
 
-    private Coroutine _idleCoroutine;
+    private IEnumerator _idleCoroutine;
 
     private bool isStateRunning;
 
@@ -30,7 +30,8 @@ public class BaseEnemyIdleState : BaseEnemyState
 
         _player = UnityEngine.Object.FindObjectOfType<MainCharacterController>().transform;
         actorController.animator.Play(idleAnim);
-        _idleCoroutine = actorController.StartCoroutine(StartIdle());
+        _idleCoroutine = StartIdle();
+        actorController.StartCoroutine(_idleCoroutine);
 
         var x = UnityEngine.Random.Range(-1f, 1f) < 0
             ? UnityEngine.Random.Range(-outerRange, -innerRange)
@@ -60,6 +61,7 @@ public class BaseEnemyIdleState : BaseEnemyState
         base.OnExit();
 
         isStateRunning = false;
+        actorController.Stop();
         if (_idleCoroutine != null)
             actorController.StopCoroutine(_idleCoroutine);
     }
@@ -69,6 +71,7 @@ public class BaseEnemyIdleState : BaseEnemyState
         base.OnStop();
 
         isStateRunning = false;
+        actorController.Stop();
         if (_idleCoroutine != null)
             actorController.StopCoroutine(_idleCoroutine);
     }

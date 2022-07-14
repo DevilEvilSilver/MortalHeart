@@ -23,9 +23,9 @@ MonoBehaviour:
     level: 0
   - upgrade: {fileID: 11400000, guid: 5089ba6f9961a1b429e2a65bde52ba2f, type: 2}
     level: 0
-  - upgrade: {fileID: 11400000, guid: ad78402bc7e05ee43ae822c296142915, type: 2}
-    level: 0
   - upgrade: {fileID: 11400000, guid: e22d142ce838ba64f8949eb354fc7871, type: 2}
+    level: 0
+  - upgrade: {fileID: 11400000, guid: ad78402bc7e05ee43ae822c296142915, type: 2}
     level: 0
   - upgrade: {fileID: 11400000, guid: 126a7f9b984b5e44188c43a6daa67a65, type: 2}
     level: 0

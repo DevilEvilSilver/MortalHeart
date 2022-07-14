@@ -54,6 +54,7 @@ public class BaseEnemyController : SerializedMonoBehaviour, IHeath
 
     [Header("State Controller")]
     public BaseEnemyState idleState;
+    public BaseEnemyState hitState;
     public BaseEnemyState deathState;
 
     [Space(10)]
@@ -70,6 +71,8 @@ public class BaseEnemyController : SerializedMonoBehaviour, IHeath
 
         if (idleState != null)
             idleState.actorControllerForEditor = this;
+        if (hitState != null)
+            hitState.actorControllerForEditor = this;
         if (deathState != null)
             deathState.actorControllerForEditor = this;
 
@@ -109,6 +112,8 @@ public class BaseEnemyController : SerializedMonoBehaviour, IHeath
     {
         if (idleState != null)
             idleState.OnInit(this);
+        if (hitState != null)
+            hitState.OnInit(this);
         if (deathState != null)
             deathState.OnInit(this);
 
@@ -182,6 +187,11 @@ public class BaseEnemyController : SerializedMonoBehaviour, IHeath
             _health -= damage; 
             if (_health < 0f)
                 _health = 0f;
+
+            if (damage > baseMaxHealth / 10f)
+            {
+                fsm.ChangeState(hitState, true);
+            }
             ChangeHp(_health, baseMaxHealth);
         }
     }
@@ -197,6 +207,14 @@ public class BaseEnemyController : SerializedMonoBehaviour, IHeath
     {
         Agent.SetDestination(pos);
         Agent.speed = speed;
+        //transform.DOKill();
+        //transform.DOLookAt(Agent.velocity, 0.1f);
+    }
+
+    public void Stop()
+    {
+        Agent.SetDestination(transform.position);
+        Agent.speed = 0;
         //transform.DOKill();
         //transform.DOLookAt(Agent.velocity, 0.1f);
     }

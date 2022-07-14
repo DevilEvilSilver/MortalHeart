@@ -20,7 +20,7 @@ public class EnemySkillMelee : BaseEnemyAttackState
     [SerializeField] private float active;
 
     private IDisposable _disposable;
-    private Coroutine _attackCoroutine;
+    private IEnumerator _attackCoroutine;
 
     private Transform _player;
     private Vector3 _playerPosOffset;
@@ -31,7 +31,8 @@ public class EnemySkillMelee : BaseEnemyAttackState
 
         _player = UnityEngine.Object.FindObjectOfType<MainCharacterController>().transform;
         actorController.animator.Play(moveAnim);
-        _attackCoroutine = actorController.StartCoroutine(StartAttack());
+        _attackCoroutine = StartAttack();
+        actorController.StartCoroutine(_attackCoroutine);
 
         _playerPosOffset = new Vector3(UnityEngine.Random.Range(-attackRange / 2f, attackRange / 2f)
             , 0f
@@ -80,6 +81,7 @@ public class EnemySkillMelee : BaseEnemyAttackState
         base.OnExit();
 
         actorController.Agent.isStopped = false;
+        actorController.Stop();
         _disposable?.Dispose();
         if (_attackCoroutine != null)
             actorController.StopCoroutine(_attackCoroutine);
@@ -90,6 +92,7 @@ public class EnemySkillMelee : BaseEnemyAttackState
         base.OnStop();
 
         actorController.Agent.isStopped = false;
+        actorController.Stop();
         _disposable?.Dispose();
         if (_attackCoroutine != null)
             actorController.StopCoroutine(_attackCoroutine);

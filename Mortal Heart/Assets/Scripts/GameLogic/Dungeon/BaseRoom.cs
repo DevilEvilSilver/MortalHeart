@@ -33,7 +33,7 @@ public class BaseRoom : MonoBehaviour
     {
         _aliveEnemyCount = 0;
         CurrentRoomState = RoomState.Spawned;
-        _camera = Camera.main.GetComponent<CinemachineVirtualCamera>();
+        _camera = Helpers.Camera.GetComponent<CinemachineVirtualCamera>();
 
         foreach (var door in entranceDoors)
         {
@@ -179,10 +179,12 @@ public class BaseRoom : MonoBehaviour
     public void ExitRoom(RoomProperties nextRoom)
     {
         DungeonController.Instance.GoToNextRoom(nextRoom);
-        if (nextRoom.index.y > 99)
+        if (nextRoom == null)
         {
             if (DungeonController.Instance.GoToNextFloor()) // check if reach final floor
                 return;
+            else
+                SceneManager.LoadScene(GameUtils.SceneName.GAMEPLAY, LoadSceneMode.Single);
         }
 
         switch (nextRoom.type)

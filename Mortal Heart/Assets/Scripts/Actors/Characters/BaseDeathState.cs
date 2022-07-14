@@ -32,4 +32,11 @@ public class BaseDeathState : BaseCharacterState
 
         _disposable?.Dispose();
     }
+
+    public override void OnStop()
+    {
+        base.OnStop();
+
+        _disposable?.Dispose();
+    }
 }

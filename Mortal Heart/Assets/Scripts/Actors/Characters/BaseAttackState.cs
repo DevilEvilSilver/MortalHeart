@@ -85,4 +85,15 @@ public class BaseAttackState : BaseCharacterState
         if (isComboChain && !_isDodgeCancel && !_isComboChained)
             actorController.skillSetIndex = 0;
     }
+
+    public override void OnStop()
+    {
+        base.OnStop();
+
+        actorController.dodgeAction.performed -= OnDodge;
+        _ctx.action.performed -= OnComboChain;
+
+        if (isComboChain && !_isDodgeCancel && !_isComboChained)
+            actorController.skillSetIndex = 0;
+    }
 }

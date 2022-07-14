@@ -43,4 +43,11 @@ public class BasePickUpState : BaseCharacterState
 
         _disposable?.Dispose();
     }
+
+    public override void OnStop()
+    {
+        base.OnStop();
+
+        _disposable?.Dispose();
+    }
 }

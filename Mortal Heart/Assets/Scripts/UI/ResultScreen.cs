@@ -56,6 +56,6 @@ public class ResultScreen : MonoBehaviour
 
     public void OnBack()
     {
-        SceneManager.LoadScene(GameUtils.SceneName.MAIN_MENU, LoadSceneMode.Single);
+        SceneManager.LoadScene(GameUtils.SceneName.UPGRADE_CHARACTER, LoadSceneMode.Single);
     }
 }

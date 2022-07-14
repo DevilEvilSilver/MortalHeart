@@ -40,6 +40,7 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
             for (int j = 0; j < height; j++)
             {
                 _map[i, j].isActive = false;
+                _map[i, j].type = RoomType.Normal;
             }
         }
         _isInit = true;
@@ -60,7 +61,7 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
         _isInit = false;
         _currentFloor++;
 
-        if (_currentFloor >= 3)
+        if (_currentFloor > 1)
         {
             SceneManager.LoadScene(GameUtils.SceneName.RESULT, LoadSceneMode.Single);
             return true;
@@ -102,8 +103,16 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
         var yPrevious = previous.index.y;
         if (yPrevious > height - 2)
         {
-            previous.nextRooms.Add(new Vector2Int(xPrevious, 999));
-            previous.isActive = true;
+            previous.nextRooms.Add(new Vector2Int(xPrevious, yPrevious + 1));
+            previous.type = RoomType.Boss;
+
+            return;
+        }
+        if (yPrevious == height - 2)
+        {
+            _map[width / 2, yPrevious + 1].isActive = true;
+            previous.nextRooms.Add(new Vector2Int(width / 2, yPrevious + 1));
+            IterateNextRoom(_map[width / 2, yPrevious + 1]);
             //previous.type = RoomType.Boss;
             return;
         }

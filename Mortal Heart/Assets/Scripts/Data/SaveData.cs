@@ -38,7 +38,7 @@ public class SaveData : ScriptableObject
         foreach (var save in upgradesLevel)
         {
             save.upgrade.ResetData();
-            save.level = save.upgrade.level;
+            save.level = save.upgrade.defaultLevel;
         }
     }
 

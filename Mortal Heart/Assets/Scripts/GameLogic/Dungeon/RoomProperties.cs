@@ -22,5 +22,5 @@ public class RoomProperties
 
 public enum RoomType
 {
-    Normal = 0, Shop, Boss
+    Normal = 0, Shop, Elite, Boss
 }

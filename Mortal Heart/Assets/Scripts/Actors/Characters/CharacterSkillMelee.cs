@@ -33,4 +33,11 @@ public class CharacterSkillMelee : BaseAttackState
 
         _disposable?.Dispose();
     }
+
+    public override void OnStop()
+    {
+        base.OnStop();
+
+        _disposable?.Dispose();
+    }
 }

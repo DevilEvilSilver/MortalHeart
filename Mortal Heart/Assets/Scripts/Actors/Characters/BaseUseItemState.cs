@@ -51,4 +51,12 @@ public class BaseUseItemState : BaseCharacterState
         _disposable?.Dispose();
         _disposable_2?.Dispose();
     }
+
+    public override void OnStop()
+    {
+        base.OnStop();
+
+        _disposable?.Dispose();
+        _disposable_2?.Dispose();
+    }
 }

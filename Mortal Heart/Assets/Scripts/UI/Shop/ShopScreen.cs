@@ -7,80 +7,113 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 
-public class ShopScreen : MonoBehaviour
+public class ShopScreen : SingletonMonoBehaviour<ShopScreen>
 {
-    //public 
+    [Header("ShopScreen")]
     public TMP_Text moneyText;
-
-    public ItemUI[] normalItems;
-    public ItemUI[] rareItems;
 
     public GameObject descriptionPanel;
     public TMP_Text descriptionText;
     public TMP_Text priceText;
     public Button buyBtn;
 
-    private ItemData currentSelectItem;
-    
-    private void OnEnable()
+    [Header("PauseScreen")]
+    public GameObject pausePanel;
+    public GameObject optionPanel;
+
+    protected RoomProperties roomProperties;
+
+    protected override void Init()
     {
-
-
-        currentSelectItem = null;
+        base.Init();
         ResetUI();
     }
 
-    private void ResetUI()
+    public void InitState(RoomProperties properties)
     {
-        //moneyText.text = GameController.Instance.currSaveData.money.ToString();
-
-        //if (currentSelectSkill == null)
-        //    descriptionPanel.SetActive(false);
-        //else
-        //{
-        //    descriptionText.text = currentSelectSkill.description;
-        //    priceText.text = currentSelectSkill.GetNextLevelPrice().ToString();
-
-        //    bool isUpgradeAble = true;
-        //    foreach (var require in currentSelectSkill.requirements)
-        //    {
-        //        if (require.level <= 0)
-        //            isUpgradeAble = false;
-        //    }
-        //    if (isUpgradeAble && GameController.Instance.currSaveData.money > currentSelectSkill.GetNextLevelPrice())
-        //        upgradeBtn.interactable = true;
-        //    else
-        //        upgradeBtn.interactable = false;
-
-        //    upgradeBtn.onClick.RemoveAllListeners();
-        //    upgradeBtn.onClick.AddListener(() => OnUpgradeSkill(currentSelectSkill));
-
-        //    descriptionPanel.SetActive(true);
-        //}
+        roomProperties = properties;
     }
 
-    public void OnSelectSkill(UpgradeData data)
+    private void ResetUI(ItemUI currentSelectItem = null)
     {
-        //currentSelectSkill = data;
-        //ResetUI();
+        moneyText.text = InventorySystem.Instance.money.ToString();
+
+        if (currentSelectItem == null)
+            descriptionPanel.SetActive(false);
+        else
+        {
+            descriptionText.text = currentSelectItem.data.description;
+            priceText.text = currentSelectItem.data.price.ToString();
+            buyBtn.interactable = ShopController.Instance.IsAffordable(currentSelectItem.data);
+            buyBtn.onClick.RemoveAllListeners();
+            buyBtn.onClick.AddListener(() => OnBuy(currentSelectItem));
+
+            descriptionPanel.SetActive(true);
+        }
     }
 
-    private void OnUpgradeSkill(UpgradeData data)
+    public void OnSelectSkill(ItemUI item)
     {
-        GameController.Instance.currSaveData.money -= data.GetNextLevelPrice();
-        GameController.Instance.currSaveData.SaveUpgrade(data);
-        data.UpgradeNextLevel();
+        ResetUI(item);
+    }
+
+    private void OnBuy(ItemUI item)
+    {
+        ShopController.Instance.BuyItem(item.data);
         ResetUI();
+        item.OnBuyItem();
     }
 
-    public void OnQuit()
+    public void OnContinue()
     {
-        SceneManager.LoadScene(GameUtils.SceneName.MAIN_MENU, LoadSceneMode.Single);
+        var nextRoom = DungeonController.Instance.GetRoomProperties(roomProperties.nextRooms[0]);
+        DungeonController.Instance.GoToNextRoom(nextRoom);
+        if (nextRoom == null)
+        {
+            if (DungeonController.Instance.GoToNextFloor()) // check if reach final floor
+                return;
+            else
+                SceneManager.LoadScene(GameUtils.SceneName.GAMEPLAY, LoadSceneMode.Single);
+        }
+
+        switch (nextRoom.type)
+        {
+            default:
+            case RoomType.Normal:
+            case RoomType.Elite:
+            case RoomType.Boss:
+                SceneManager.LoadScene(GameUtils.SceneName.GAMEPLAY, LoadSceneMode.Single);
+                break;
+            case RoomType.Shop:
+                SceneManager.LoadScene(GameUtils.SceneName.SHOP, LoadSceneMode.Single);
+                break;
+        }
+    }
+
+    private void OnPause(InputAction.CallbackContext ctx)
+    {
+        pausePanel.SetActive(!pausePanel.activeInHierarchy);
     }
 
     public void OnPlay()
     {
-        InventorySystem.Instance.InitState();
-        SceneManager.LoadScene(GameUtils.SceneName.GAMEPLAY, LoadSceneMode.Single);
+        pausePanel.SetActive(false);
+        GameController.Instance.PauseGame(true);
+    }
+
+    public void OnOptionSelect()
+    {
+        optionPanel.SetActive(true);
+    }
+
+    public void OnOptionQuit()
+    {
+        optionPanel.SetActive(false);
+    }
+
+    public void OnQuit()
+    {
+        GameController.Instance.SaveData();
+        SceneManager.LoadScene(GameUtils.SceneName.MAIN_MENU, LoadSceneMode.Single);
     }
 }

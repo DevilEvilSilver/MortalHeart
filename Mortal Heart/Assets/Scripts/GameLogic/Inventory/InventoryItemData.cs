@@ -5,8 +5,10 @@ public class InventoryItemData
 {
     public string id;
     public string displayName;
+    public string description;
     public Sprite icon;
     public int maxCapacity;
+    public int price;
 
     [Header("Usable")]
     public AnimationClip anim;

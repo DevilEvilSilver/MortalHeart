@@ -13,8 +13,6 @@ public class OptionScreen : MonoBehaviour
 
     public Button applyBtn;
 
-    public SaveFileUI[] saveFiles;
-
     private float _originalBGMVolume, _originalSFXVolume;
     private string _originalResolution;
     private bool _isFullScreen;
@@ -46,8 +44,9 @@ public class OptionScreen : MonoBehaviour
             && sfxSlider.value == _originalSFXVolume
             && resolution.text == _originalResolution
             && fullscreen.isOn == _isFullScreen)
-                applyBtn.interactable = true;
-        applyBtn.interactable = false;
+                applyBtn.interactable = false;
+        else
+            applyBtn.interactable = true;
     }
 
     public void ApplyConfig()

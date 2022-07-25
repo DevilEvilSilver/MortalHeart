@@ -7,6 +7,8 @@ public class BaseAttackState : BaseCharacterState
     [ValueDropdown("AllAnimations")]
     public string attackAnim;
     public bool isComboChain;
+    [ShowIf("isComboChain")]
+    public UpgradeData comboUpgrade;
 
     public bool isTimeBased;
     [ShowIf("isTimeBased")]
@@ -72,7 +74,8 @@ public class BaseAttackState : BaseCharacterState
         _ctx = ctx;
 
         actorController.dodgeAction.performed += OnDodge;
-        _ctx.action.performed += OnComboChain;
+        if (comboUpgrade != null && comboUpgrade.level > 0)
+            _ctx.action.performed += OnComboChain;
     }
 
     public override void OnExit()
@@ -80,7 +83,8 @@ public class BaseAttackState : BaseCharacterState
         base.OnExit();
 
         actorController.dodgeAction.performed -= OnDodge;
-        _ctx.action.performed -= OnComboChain;
+        if (comboUpgrade != null && comboUpgrade.level > 0)
+                _ctx.action.performed -= OnComboChain;
 
         if (isComboChain && !_isDodgeCancel && !_isComboChained)
             actorController.skillSetIndex = 0;
@@ -91,7 +95,8 @@ public class BaseAttackState : BaseCharacterState
         base.OnStop();
 
         actorController.dodgeAction.performed -= OnDodge;
-        _ctx.action.performed -= OnComboChain;
+        if (comboUpgrade != null && comboUpgrade.level > 0)
+                _ctx.action.performed -= OnComboChain;
 
         if (isComboChain && !_isDodgeCancel && !_isComboChained)
             actorController.skillSetIndex = 0;

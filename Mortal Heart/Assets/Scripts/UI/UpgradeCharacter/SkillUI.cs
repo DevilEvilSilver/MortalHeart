@@ -18,15 +18,15 @@ public class SkillUI : MonoBehaviour, ISelectHandler
 
     private void Awake()
     {
-        InitSkillData();
+        InitState();
     }
 
     public void OnSelect(BaseEventData eventData)
     {
-        UpgradeCharacterScreen.Instance.OnSelectSkill(data);
+        UpgradeCharacterScreen.Instance.OnSelectSkill(this);
     }
 
-    public void InitSkillData()
+    public void InitState()
     {
         icon.sprite = data.icon;
         if (data.level <= 0)

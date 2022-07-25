@@ -113,7 +113,7 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
             _map[width / 2, yPrevious + 1].isActive = true;
             previous.nextRooms.Add(new Vector2Int(width / 2, yPrevious + 1));
             IterateNextRoom(_map[width / 2, yPrevious + 1]);
-            //previous.type = RoomType.Boss;
+            previous.type = RoomType.Shop;
             return;
         }
 
@@ -135,6 +135,7 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
 
         var index = Random.Range(xLeft, xRight + 1);
         _map[index, yPrevious + 1].isActive = true;
+        _map[index, yPrevious + 1].type = Random.Range(0f, 100f) < 20f ? RoomType.Elite : RoomType.Normal;
         previous.nextRooms.Add(new Vector2Int(index, yPrevious + 1));
         IterateNextRoom(_map[index, yPrevious + 1]);
     }
@@ -147,5 +148,13 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
 
         var room = SimplePool.Spawn(_roomPrefab.gameObject, Vector3.zero, Quaternion.identity);
         room.GetComponent<BaseRoom>().Init(_player, _currentFloor, _currentRoom, _previousRoom);
+    }
+
+    public void SpawnShop()
+    {
+        if (!_isInit)
+            InitDungeon();
+
+        ShopScreen.Instance.InitState(_currentRoom);
     }
 }

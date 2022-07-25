@@ -2726,7 +2726,9 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 759223952834186112}
+    - {fileID: 11400000, guid: 4c58310d6e2e33644a76cf5d55b87300, type: 2}
     - {fileID: 9182272692990830746}
+    - {fileID: 11400000, guid: 1abd75646dec4044fa24bada5cb9605e, type: 2}
     - {fileID: 7262591662529606143}
     - {fileID: 7534816310373779220}
     SerializedBytesString: 
@@ -2872,6 +2874,9 @@ MonoBehaviour:
     - Name: isComboChain
       Entry: 5
       Data: true
+    - Name: comboUpgrade
+      Entry: 10
+      Data: 1
     - Name: isTimeBased
       Entry: 5
       Data: true
@@ -2886,7 +2891,7 @@ MonoBehaviour:
       Data: 0.1663
     - Name: hitCollider
       Entry: 10
-      Data: 1
+      Data: 2
     - Name: setDamage
       Entry: 5
       Data: true
@@ -2908,6 +2913,9 @@ MonoBehaviour:
     - Name: isComboChain
       Entry: 5
       Data: true
+    - Name: comboUpgrade
+      Entry: 10
+      Data: 3
     - Name: isTimeBased
       Entry: 5
       Data: true
@@ -2922,7 +2930,7 @@ MonoBehaviour:
       Data: 0.125
     - Name: hitCollider
       Entry: 10
-      Data: 1
+      Data: 2
     - Name: setDamage
       Entry: 5
       Data: true
@@ -2944,6 +2952,9 @@ MonoBehaviour:
     - Name: isComboChain
       Entry: 5
       Data: true
+    - Name: comboUpgrade
+      Entry: 6
+      Data: 
     - Name: isTimeBased
       Entry: 5
       Data: true
@@ -2958,7 +2969,7 @@ MonoBehaviour:
       Data: 0.4163
     - Name: hitCollider
       Entry: 10
-      Data: 1
+      Data: 2
     - Name: setDamage
       Entry: 5
       Data: true
@@ -2992,6 +3003,9 @@ MonoBehaviour:
     - Name: isComboChain
       Entry: 5
       Data: false
+    - Name: comboUpgrade
+      Entry: 6
+      Data: 
     - Name: isTimeBased
       Entry: 5
       Data: false
@@ -3006,7 +3020,7 @@ MonoBehaviour:
       Data: 0
     - Name: shield
       Entry: 10
-      Data: 2
+      Data: 4
     - Name: parryWindomTime
       Entry: 4
       Data: 0.25
@@ -3025,6 +3039,9 @@ MonoBehaviour:
     - Name: isComboChain
       Entry: 5
       Data: true
+    - Name: comboUpgrade
+      Entry: 6
+      Data: 
     - Name: isTimeBased
       Entry: 5
       Data: true
@@ -3039,7 +3056,7 @@ MonoBehaviour:
       Data: 0.2
     - Name: hitCollider
       Entry: 10
-      Data: 3
+      Data: 5
     - Name: setDamage
       Entry: 5
       Data: true
@@ -3073,6 +3090,9 @@ MonoBehaviour:
     - Name: isComboChain
       Entry: 5
       Data: false
+    - Name: comboUpgrade
+      Entry: 6
+      Data: 
     - Name: isTimeBased
       Entry: 5
       Data: true

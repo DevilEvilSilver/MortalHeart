@@ -19,7 +19,7 @@ public class BasePickUpState : BaseCharacterState
         isLock = true;
 
         var items = Physics.OverlapSphere(actorController.transform.position, range, itemLayer);
-        Debug.Log(items);
+        //Debug.Log(items);
         if (items != null && items.Length > 0 && items[0].GetComponentInParent<ItemObject>().PickUpObject())
         {
             actorController.animator.CrossFadeInFixedTime(pickUpAnim, 0.2f);

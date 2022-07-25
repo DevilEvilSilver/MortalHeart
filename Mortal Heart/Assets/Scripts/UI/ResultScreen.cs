@@ -24,6 +24,8 @@ public class ResultScreen : MonoBehaviour
 
     private void Awake()
     {
+        GameController.Instance.SaveData();
+
         if (playerData.Hp > 0f)
         {
             resultText.text = WIN;
@@ -38,10 +40,13 @@ public class ResultScreen : MonoBehaviour
         moneyText.text = InventorySystem.Instance.money.ToString();
         killedText.text = playerData.EnemyKilled.ToString();
 
-        scoreText.text = ScoreCalculation(playerData.PlayTime, InventorySystem.Instance.money, playerData.EnemyKilled);
+        var score = ScoreCalculation(playerData.PlayTime, InventorySystem.Instance.money, playerData.EnemyKilled);
+        scoreText.text = score.ToString();
+
+        GameController.Instance.SaveData(score);
     }
 
-    private string ScoreCalculation(float time, int money, int enemyKilled)
+    private int ScoreCalculation(float time, int money, int enemyKilled)
     {
         int score = 0;
 
@@ -50,7 +55,7 @@ public class ResultScreen : MonoBehaviour
         if (playerData.Hp > 0f)
             score += 1800 - Mathf.FloorToInt(time);
 
-        return score.ToString();
+        return score;
     }
 
 

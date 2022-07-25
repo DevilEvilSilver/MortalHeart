@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca501d9b458e34f438f0397c16f21434, type: 3}
-  m_Name: AllItemData
+  m_Script: {fileID: 11500000, guid: 4464a95567ad00a40932e8ad1acc454d, type: 3}
+  m_Name: AllNormalEnemyData
   m_EditorClassIdentifier: 
-  ItemList:
-  - item: {fileID: 3739176176359371307, guid: 34923cf49a117c04387ff24fd3732df8, type: 3}
-    type: 0
+  EnemyList:
+  - enemy: {fileID: 5189316332874381361, guid: 30639d73752a10b4c829039cdffddfa3, type: 3}
+    diffValue: 25
     floor: 1

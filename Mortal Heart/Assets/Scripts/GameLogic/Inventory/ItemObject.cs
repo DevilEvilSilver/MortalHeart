@@ -7,14 +7,16 @@ public class ItemObject : SerializedMonoBehaviour
     [SerializeField] private InventoryItemData data;
     [SerializeField] private LayerMask playerLayer;
 
-    public virtual void OnTriggerEnter(Collider coll)
-    {
-        if ((playerLayer.value & (1 << coll.gameObject.layer)) == 0) return;
+    public InventoryItemData Data => data;
 
-        Debug.Log("In Item Pick Up Range !!!");
-        //InventorySystem.Instance.Add(data);
-        //SimplePool.Despawn(gameObject);
-    }
+    //public virtual void OnTriggerEnter(Collider coll)
+    //{
+    //    if ((playerLayer.value & (1 << coll.gameObject.layer)) == 0) return;
+
+    //    Debug.Log("In Item Pick Up Range !!!");
+    //    //InventorySystem.Instance.Add(data);
+    //    //SimplePool.Despawn(gameObject);
+    //}
 
     public bool PickUpObject()
     {

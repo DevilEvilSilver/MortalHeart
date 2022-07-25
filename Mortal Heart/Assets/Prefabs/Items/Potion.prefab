@@ -115,12 +115,18 @@ MonoBehaviour:
     - Name: displayName
       Entry: 1
       Data: potion
+    - Name: description
+      Entry: 1
+      Data: Heal a bit of player's health
     - Name: icon
       Entry: 10
       Data: 0
     - Name: maxCapacity
       Entry: 3
       Data: 3
+    - Name: price
+      Entry: 3
+      Data: 1
     - Name: anim
       Entry: 10
       Data: 1

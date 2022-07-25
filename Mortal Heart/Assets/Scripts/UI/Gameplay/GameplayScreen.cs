@@ -62,6 +62,13 @@ public class GameplayScreen : SingletonMonoBehaviour<GameplayScreen>
     {
         itemIcon.sprite = icon;
         itemAmount.text = amount.ToString();
+        itemAmount.gameObject.SetActive(true);
+    }
+
+    public void OnNoneItem()
+    {
+        itemIcon.sprite = null;
+        itemAmount.gameObject.SetActive(false);
     }
 
     public void OnMoneyChange(int amount)
@@ -81,6 +88,7 @@ public class GameplayScreen : SingletonMonoBehaviour<GameplayScreen>
 
     public void OnQuit()
     {
+        GameController.Instance.SaveData();
         SceneManager.LoadScene(GameUtils.SceneName.MAIN_MENU, LoadSceneMode.Single);
     }
 }

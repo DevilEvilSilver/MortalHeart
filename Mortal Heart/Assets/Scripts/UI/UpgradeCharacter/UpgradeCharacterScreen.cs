@@ -18,36 +18,22 @@ public class UpgradeCharacterScreen : SingletonMonoBehaviour<UpgradeCharacterScr
     public TMP_Text priceText;
     public Button upgradeBtn;
 
-    private UpgradeData currentSelectSkill;
-
     protected override void Init()
     {
-        currentSelectSkill = null;
         ResetUI();
     }
 
-    private void ResetUI()
+    private void ResetUI(SkillUI currentSelectSkill = null)
     {
-        moneyText.text = GameController.Instance.currSaveData.money.ToString();
+        moneyText.text = GameController.Instance.currSaveData.experience.ToString();
 
         if (currentSelectSkill == null)
             descriptionPanel.SetActive(false);
         else
         {
-            descriptionText.text = currentSelectSkill.description;
-            priceText.text = currentSelectSkill.GetNextLevelPrice().ToString();
-
-            bool isUpgradeAble = true;
-            foreach (var require in currentSelectSkill.requirements)
-            {
-                if (require.level <= 0)
-                    isUpgradeAble = false;
-            }
-            if (isUpgradeAble && GameController.Instance.currSaveData.money > currentSelectSkill.GetNextLevelPrice())
-                upgradeBtn.interactable = true;
-            else
-                upgradeBtn.interactable = false;
-
+            descriptionText.text = currentSelectSkill.data.description;
+            priceText.text = currentSelectSkill.data.GetNextLevelPrice().ToString();
+            upgradeBtn.interactable = UpgradeSystem.Instance.IsSkillUpgradeable(currentSelectSkill.data);
             upgradeBtn.onClick.RemoveAllListeners();
             upgradeBtn.onClick.AddListener(() => OnUpgradeSkill(currentSelectSkill));
 
@@ -55,18 +41,16 @@ public class UpgradeCharacterScreen : SingletonMonoBehaviour<UpgradeCharacterScr
         }
     }
 
-    public void OnSelectSkill(UpgradeData data)
+    public void OnSelectSkill(SkillUI skill)
     {
-        currentSelectSkill = data;
-        ResetUI();
+        ResetUI(skill);
     }
 
-    private void OnUpgradeSkill(UpgradeData data)
+    private void OnUpgradeSkill(SkillUI skill)
     {
-        GameController.Instance.currSaveData.money -= data.GetNextLevelPrice();
-        GameController.Instance.currSaveData.SaveUpgrade(data);
-        data.UpgradeNextLevel();
+        UpgradeSystem.Instance.UpgradeSkill(skill.data);
         ResetUI();
+        skill.InitState();
     }
 
     public void OnQuit()
@@ -76,6 +60,7 @@ public class UpgradeCharacterScreen : SingletonMonoBehaviour<UpgradeCharacterScr
 
     public void OnPlay()
     {
+        GameController.Instance.ResetPlayerData();
         InventorySystem.Instance.InitState();
         SceneManager.LoadScene(GameUtils.SceneName.GAMEPLAY, LoadSceneMode.Single);
     }

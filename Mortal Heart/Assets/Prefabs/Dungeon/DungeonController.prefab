@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -45,5 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 8207030184153095236, guid: 2a2dd9a494dd49641a29b18e2ae51e39, type: 3}
   _roomPrefab: {fileID: 1239917832532941065, guid: 95996ea8786f1e54a844f71a27c5c97c, type: 3}
-  width: 6
-  height: 10
+  iterateTimes: 3
+  width: 4
+  height: 5

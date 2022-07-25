@@ -52,6 +52,7 @@ public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
         if (inventory == null || inventory.Count <= 0) return;
 
         currentItemIndex = Mathf.Clamp(currentItemIndex + offset, 0, inventory.Count - 1);
+        Debug.Log(currentItemIndex);
         UpdateItemData();
     }
 
@@ -64,6 +65,20 @@ public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
         return null;
     }
 
+    public bool CheckAvailbleSlot(InventoryItemData itemData)
+    {
+        if (_itemDictionary.TryGetValue(itemData.id, out InventoryItemStack value))
+        {
+            if (value.stackSize < itemData.maxCapacity)
+                return true;
+        }
+        else if (inventory.Count < maxUsableCapacity)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public InventoryItemData GetCurrentItem()
     {
         if (inventory.Count <= 0 || inventory[currentItemIndex] == null) return null;
@@ -73,9 +88,6 @@ public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
 
     public bool Add(InventoryItemData itemData)
     {
-        if (inventory.Count >= maxUsableCapacity)
-            return false;
-
         if (_itemDictionary.TryGetValue(itemData.id, out InventoryItemStack value))
         {
             if (value.AddToStack())
@@ -134,14 +146,23 @@ public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
     public void UpdatePlayerMoney(int change)
     {
         money += change;
-        GameplayScreen.instance.OnMoneyChange(money);
+
+        if (SceneManager.GetActiveScene().name.Equals(GameUtils.SceneName.GAMEPLAY))
+        {
+            GameplayScreen.Instance.OnMoneyChange(money);
+        }  
     }
 
     private void UpdateItemData()
     {
-        if (inventory.Count > 0 && inventory[currentItemIndex] != null)
-            GameplayScreen.instance.
-                OnItemChange(inventory[currentItemIndex].data.icon, inventory[currentItemIndex].stackSize);
+        if (SceneManager.GetActiveScene().name.Equals(GameUtils.SceneName.GAMEPLAY))
+        {
+            if (inventory.Count > 0 && inventory[currentItemIndex] != null)
+                GameplayScreen.Instance.
+                    OnItemChange(inventory[currentItemIndex].data.icon, inventory[currentItemIndex].stackSize);
+            else
+                GameplayScreen.Instance.OnNoneItem();
+        }
     }
     
 }

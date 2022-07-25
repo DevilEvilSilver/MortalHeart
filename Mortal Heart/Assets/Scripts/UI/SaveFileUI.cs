@@ -39,7 +39,7 @@ public class SaveFileUI : MonoBehaviour
 
             TimeSpan time = TimeSpan.FromSeconds(saveData.playTime);
             timeText.text = time.ToString(@"mm\:ss");
-            moneyText.text = saveData.money.ToString();
+            moneyText.text = saveData.experience.ToString();
             killedText.text = saveData.enemyKilled.ToString();
             statsGO.gameObject.SetActive(true);
         }

@@ -15,9 +15,13 @@ public class BaseRoom : MonoBehaviour
     [SerializeField] protected ExitDoor[] exitDoors;
     [SerializeField] protected Transform[] spawnZones;
     [SerializeField] protected Transform[] enemyZones;
-    [SerializeField] protected AllEnemyData enemies; 
-    [SerializeField] protected AllItemData items; 
-    [SerializeField] protected Vector2Int enemiesCount;
+    [SerializeField] protected AllEnemyData allNormalEnemies;
+    [SerializeField] protected AllEnemyData allRareEnemies;
+    [SerializeField] protected AllEnemyData allBossEnemies;
+    [SerializeField] protected AllItemData allNormalItems;
+    [SerializeField] protected AllItemData allRareItems;
+    [SerializeField] protected AllItemData allBossItems;
+    [SerializeField] protected int difficultValue;
 
     protected EntranceDoor _currentEntrance;
     protected ExitDoor[] _currenExits;
@@ -87,46 +91,103 @@ public class BaseRoom : MonoBehaviour
         // player
         _player = SpawnPlayer(player, spawnPos);
 
-        // enemies
+        // enemies & reward
         if (currentRoom.type == RoomType.Normal)
         {
-            int count = Random.Range(enemiesCount.x, enemiesCount.y + 1);
-            _enemyList = new BaseEnemyController[count];
-            _aliveEnemyCount = count;
-            for (int j = 0; j < count; j++)
+            var enemies = GetEnemiesBaseOnDiffValue(difficultValue, allNormalEnemies, currentFloor);
+            _enemyList = new BaseEnemyController[enemies.Count];
+            _aliveEnemyCount = enemies.Count;
+            for (int j = 0; j < enemies.Count; j++)
             {
                 var zone = enemyZones[Random.Range(0, enemyZones.Length)];
                 var e = SimplePool.Spawn(
-                    GetRandomNormalEnemy(currentFloor).gameObject,
+                    enemies[i].gameObject,
                     zone.position + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)),
                     zone.rotation);
 
                 _enemyList[j] = e.GetComponent<BaseEnemyController>();
                 _enemyList[j].Init(OnEnemyDeath);
             }
-            _reward = GetRandomNormalItem(currentFloor);
+            _reward = GetRandomItemFromList(allNormalItems, currentFloor);
+        }
+        else if (currentRoom.type == RoomType.Elite)
+        {
+            var eliteData = GetRandomEnemyFromList(allRareEnemies, currentFloor);
+            var elite = SimplePool.Spawn(
+                eliteData.enemy.gameObject,
+                enemyZones[0].position + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)),
+                enemyZones[0].rotation);
+
+            var enemies = GetEnemiesBaseOnDiffValue(difficultValue - eliteData.diffValue
+                , allNormalEnemies, currentFloor);
+            _enemyList = new BaseEnemyController[enemies.Count + 1];
+            _aliveEnemyCount = enemies.Count + 1;
+            for (int j = 0; j < enemies.Count; j++)
+            {
+                var zone = enemyZones[Random.Range(0, enemyZones.Length)];
+                var e = SimplePool.Spawn(
+                    enemies[i].gameObject,
+                    zone.position + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)),
+                    zone.rotation);
+
+                _enemyList[j] = e.GetComponent<BaseEnemyController>();
+                _enemyList[j].Init(OnEnemyDeath);
+            }
+
+            _enemyList[enemies.Count] = elite.GetComponent<BaseEnemyController>();
+            _enemyList[enemies.Count].Init(OnEnemyDeath);
+
+            _reward = GetRandomItemFromList(allRareItems, currentFloor);
+        }
+        else if (currentRoom.type == RoomType.Boss)
+        {
+            _enemyList = new BaseEnemyController[1];
+            var elite = SimplePool.Spawn(
+                GetRandomEnemyFromList(allBossEnemies, currentFloor).enemy.gameObject,
+                enemyZones[0].position + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)),
+                enemyZones[0].rotation);
+
+            _enemyList[0] = elite.GetComponent<BaseEnemyController>();
+            _enemyList[0].Init(OnEnemyDeath);
+
+            _reward = GetRandomItemFromList(allBossItems, currentFloor);
         }
     }
 
-    private BaseEnemyController GetRandomNormalEnemy(int floor)
+    private List<BaseEnemyController> GetEnemiesBaseOnDiffValue(int diffvalue, AllEnemyData enemies, int floor)
+    {
+        var remaindiff = diffvalue;
+        List<BaseEnemyController> result = new List<BaseEnemyController>();
+
+        while (remaindiff > 0)
+        {
+            var e = GetRandomEnemyFromList(enemies, floor);
+            remaindiff -= e.diffValue;
+            result.Add(e.enemy);
+        }
+
+        return result;
+    }
+
+    private EnemyData GetRandomEnemyFromList(AllEnemyData enemies, int floor)
     {
         var list = enemies.EnemyList;
-        List<BaseEnemyController> normals = new List<BaseEnemyController>();
+        List<EnemyData> normals = new List<EnemyData>();
         foreach (var enemydata in list)
         {
-            if (enemydata.floor == floor && enemydata.type == EnemyType.Normal)
-                normals.Add(enemydata.enemy);
+            if (enemydata.floor == floor)
+                normals.Add(enemydata);
         }
         return normals[Random.Range(0, normals.Count)];
     }
 
-    private ItemObject GetRandomNormalItem(int floor)
+    private ItemObject GetRandomItemFromList(AllItemData items, int floor)
     {
         var list = items.ItemList;
         List<ItemObject> normals = new List<ItemObject>();
         foreach (var itemdata in list)
         {
-            if (itemdata.floor == floor && itemdata.type == ItemType.Normal)
+            if (itemdata.floor == floor)
                 normals.Add(itemdata.item);
         }
         return normals[Random.Range(0, normals.Count)];
@@ -191,6 +252,7 @@ public class BaseRoom : MonoBehaviour
         {
             default:
             case RoomType.Normal:
+            case RoomType.Elite:
             case RoomType.Boss:
                 SceneManager.LoadScene(GameUtils.SceneName.GAMEPLAY, LoadSceneMode.Single);
                 break;

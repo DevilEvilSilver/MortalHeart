@@ -13,11 +13,6 @@ public class AllEnemyData : ScriptableObject
 public class EnemyData
 {
     public BaseEnemyController enemy;
-    public EnemyType type;
+    public int diffValue;
     public int floor;
-}
-
-public enum EnemyType
-{
-    Normal = 0, Boss
 }

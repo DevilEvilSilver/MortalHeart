@@ -11,6 +11,7 @@ public class BaseEnemyController : SerializedMonoBehaviour, IHeath
 {
     public float baseMaxHealth;
     public float baseSpeed;
+    public int moneyDrop;
     public float idleTime;
     public Vector2 idleOffset;
 
@@ -149,6 +150,7 @@ public class BaseEnemyController : SerializedMonoBehaviour, IHeath
     private void FixedUpdate()
     {
         if (!isActive) return;
+        if (!GameController.Instance.IsPlaying) return;
 
         fsm.OnFixedUpdate();
     }
@@ -156,10 +158,13 @@ public class BaseEnemyController : SerializedMonoBehaviour, IHeath
     protected void Update()
     {
         if (!isActive) return;
+        if (!GameController.Instance.IsPlaying) return;
 
         if (_health <= 0f)
         {
             fsm.ChangeState(deathState, true);
+            InventorySystem.Instance.UpdatePlayerMoney(moneyDrop);
+            return;
         }
 
         if (fsm.currentState == idleState)

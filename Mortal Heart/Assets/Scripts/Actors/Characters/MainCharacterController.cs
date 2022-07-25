@@ -122,7 +122,7 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
     [Button("Kill")]
     public void Kill()
     {
-        playerData.Hp = -1f;
+        ChangeHealth(-9999);
     }
 
 #endif
@@ -174,8 +174,7 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
 
     protected void OnEnable()
     {
-        baseMaxHealth = GameController.Instance.currSaveData.baseMaxHealth;
-        ChangeHealth(0f, false);
+        UpdateMaxHealth();
         skillSetIndex = 0;
 
         // move
@@ -316,8 +315,11 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
     {
         if (!GameController.Instance.IsPlaying) return;
 
-        if (playerData.Hp <= 0f)
+        if (playerData.Hp <= 0f && fsm.currentState != deathState)
+        {
             fsm.ChangeState(deathState, true);
+            return;
+        }
 
         fsm.OnUpdate();
     }
@@ -419,9 +421,18 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
         playerData.Hp += change;
         if (playerData.Hp > baseMaxHealth)
             playerData.Hp = baseMaxHealth;
-        else if (playerData.Hp < 0f)
+        else if (playerData.Hp <= 0f)
+        {
             playerData.Hp = 0f;
+        }
+
         GameplayScreen.Instance.OnHPChange(playerData.Hp, baseMaxHealth, isAnim);
+    }
+
+    public void UpdateMaxHealth()
+    {
+        baseMaxHealth = GlobalData.GetMaxHealth();
+        ChangeHealth(0f, false);
     }
 
     public virtual void ToggleInvulnerable(bool isInvulnerable)
@@ -434,7 +445,7 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
         if (canTakeDamage)
         {
             ChangeHealth(-damage);
-            if (damage > 0f)
+            if (fsm.currentState != deathState && damage > 0f)
             {
                 fsm.ChangeState(hitState, true);
             }

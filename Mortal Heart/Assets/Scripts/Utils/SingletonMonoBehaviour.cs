@@ -2,7 +2,7 @@
 
 public class SingletonMonoBehaviour<T> : MonoBehaviour where T : Component
 {
-    protected static T instance;
+    private static T instance;
     public static T Instance
     {
         get

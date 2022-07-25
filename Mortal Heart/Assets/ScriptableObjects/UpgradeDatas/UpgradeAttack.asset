@@ -19,3 +19,9 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 15407581640b92449bb1c718987d3af0, type: 3}
   description: Increase character's attack damage
   prices: 0100000001000000010000000100000001000000
+  buffvalues:
+  - 0
+  - 0.2
+  - 0.4
+  - 0.6
+  - 0.8

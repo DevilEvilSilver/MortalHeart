@@ -14,9 +14,6 @@ public class GameController : SingletonMonoBehaviour<GameController>
     public SaveData currSaveData;
     public PlayerData playerData;
 
-    public UpgradeData healthUpgrade;
-    public UpgradeData speedUpgrade;
-
     public bool IsPlaying { get; private set; }
 
     protected override void Init()
@@ -50,6 +47,7 @@ public class GameController : SingletonMonoBehaviour<GameController>
     {
         InputManager.Instance.pauseAction.performed -= OnPausePerformed;
 
+        Time.timeScale = 1f;
         if (scene.name.Equals(GameUtils.SceneName.GAMEPLAY))
         {
             IsPlaying = true;
@@ -63,6 +61,7 @@ public class GameController : SingletonMonoBehaviour<GameController>
             IsPlaying = true;
             InputManager.Instance.pauseAction.performed += OnPausePerformed;
             ChangeGameState(GameState.UINavigation);
+            DungeonController.Instance.SpawnShop();
         }
         else if (scene.name.Equals(GameUtils.SceneName.MAIN_MENU))
         {
@@ -100,14 +99,18 @@ public class GameController : SingletonMonoBehaviour<GameController>
     public void LoadSaveData(SaveData data)
     {
         currSaveData = data;
-        ResetPlayerData();
+    }
+
+    public void SaveData(int experience = 0)
+    {
+        currSaveData.SavePlayData(playerData.PlayTime, playerData.EnemyKilled, experience);
     }
 
     public void ResetPlayerData()
     {
-        playerData.Hp = currSaveData.baseMaxHealth;
+        playerData.Hp = GlobalData.GetMaxHealth();
         playerData.Mana = 0f;
-        playerData.Speed = currSaveData.baseSpeed;
+        playerData.Speed = GlobalData.GetPlayerSpeed();
 
         playerData.PlayTime = 0f;
         playerData.EnemyKilled = 0;
@@ -118,6 +121,7 @@ public class GameController : SingletonMonoBehaviour<GameController>
         if (SceneManager.GetActiveScene().name.Equals(GameUtils.SceneName.GAMEPLAY))
         {
             IsPlaying = !isPause;
+            Time.timeScale = isPause ? 0f : 1f;
 
             if (IsPlaying)
             {
@@ -132,6 +136,7 @@ public class GameController : SingletonMonoBehaviour<GameController>
         else if (SceneManager.GetActiveScene().name.Equals(GameUtils.SceneName.SHOP))
         {
             IsPlaying = !isPause;
+            Time.timeScale = isPause ? 0f : 1f;
         }
     }
 

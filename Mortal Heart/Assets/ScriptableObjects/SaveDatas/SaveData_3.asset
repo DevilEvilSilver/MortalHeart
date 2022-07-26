@@ -13,16 +13,15 @@ MonoBehaviour:
   m_Name: SaveData_3
   m_EditorClassIdentifier: 
   isNewSaveData: 1
-  baseSpeed: 5
   playTime: 0
   experience: 0
   enemyKilled: 0
   upgradesLevel:
   - upgrade: {fileID: 11400000, guid: 1aee450c914952e4194ea949bf49699b, type: 2}
     level: 1
-  - upgrade: {fileID: 11400000, guid: ad78402bc7e05ee43ae822c296142915, type: 2}
-    level: 1
   - upgrade: {fileID: 11400000, guid: 5089ba6f9961a1b429e2a65bde52ba2f, type: 2}
+    level: 1
+  - upgrade: {fileID: 11400000, guid: ad78402bc7e05ee43ae822c296142915, type: 2}
     level: 1
   - upgrade: {fileID: 11400000, guid: e22d142ce838ba64f8949eb354fc7871, type: 2}
     level: 1

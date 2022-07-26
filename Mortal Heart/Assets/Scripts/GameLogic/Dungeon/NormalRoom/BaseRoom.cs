@@ -142,6 +142,7 @@ public class BaseRoom : MonoBehaviour
         else if (currentRoom.type == RoomType.Boss)
         {
             _enemyList = new BaseEnemyController[1];
+            _aliveEnemyCount = 1;
             var elite = SimplePool.Spawn(
                 GetRandomEnemyFromList(allBossEnemies, currentFloor).enemy.gameObject,
                 enemyZones[0].position + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)),

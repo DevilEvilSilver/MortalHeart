@@ -43,7 +43,9 @@ public class SaveData : ScriptableObject
 
     public void SaveToFile()
     {
-        var jsonString = JsonUtility.ToJson(this, true);
+        SaveFileFormat format = new SaveFileFormat(isNewSaveData, playTime, experience, enemyKilled
+            , upgradesLevel);
+        var jsonString = JsonUtility.ToJson(format, true);
         File.WriteAllText(GetPath(), jsonString);
     }
 
@@ -53,20 +55,22 @@ public class SaveData : ScriptableObject
         if (File.Exists(GetPath()))
         {
             jsonString = File.ReadAllText(GetPath());
-            List<UpgradeSaveData> oldLevels = upgradesLevel;
-            JsonUtility.FromJsonOverwrite(jsonString, this);
+            var format = JsonUtility.FromJson<SaveFileFormat>(jsonString);
 
-            for (int i = 0; i < upgradesLevel.Count; i++)
+            isNewSaveData = format.isNewSaveData;
+            playTime = format.playTime;
+            experience = format.experience;
+            enemyKilled = format.enemyKilled;
+            for (int i = 0; i < format.upgradesLevel.Count; i++)
             {
-                upgradesLevel[i] = oldLevels[i];
+                upgradesLevel[i].level = format.upgradesLevel[i];
             }
         }
         else
         {
             Debug.Log("save file does not exist !");
             ResetData();
-            jsonString = JsonUtility.ToJson(this, true);
-            File.WriteAllText(GetPath(), jsonString);
+            SaveToFile();
         }
     }
 
@@ -111,4 +115,29 @@ public class UpgradeSaveData
 {
     public UpgradeData upgrade;
     public int level;
+}
+
+public class SaveFileFormat
+{
+    public bool isNewSaveData;
+
+    public float playTime;
+    public int experience;
+    public int enemyKilled;
+
+    public List<int> upgradesLevel;
+    
+    public SaveFileFormat(bool isNewSaveData, float playTime, int experience, int enemyKilled
+        , List<UpgradeSaveData> upgradesLevel)
+    {
+        this.isNewSaveData = isNewSaveData;
+        this.playTime = playTime;
+        this.experience = experience;
+        this.enemyKilled = enemyKilled;
+        this.upgradesLevel = new List<int>();
+        foreach (var item in upgradesLevel)
+        {
+            this.upgradesLevel.Add(item.level);
+        }
+    }
 }

@@ -160,7 +160,7 @@ public class BaseEnemyController : SerializedMonoBehaviour, IHeath
         if (!isActive) return;
         if (!GameController.Instance.IsPlaying) return;
 
-        if (_health <= 0f)
+        if (_health <= 0f && fsm.currentState != deathState)
         {
             fsm.ChangeState(deathState, true);
             InventorySystem.Instance.UpdatePlayerMoney(moneyDrop);

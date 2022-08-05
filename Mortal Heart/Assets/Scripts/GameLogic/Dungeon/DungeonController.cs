@@ -9,12 +9,13 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
     [SerializeField] private GameObject _player;
     [SerializeField] private BaseRoom _roomPrefab;
     [SerializeField] private int iterateTimes;
+    [SerializeField] private float eliteRate;
     [SerializeField] private int width, height;
 
     private int _currentFloor;
     private RoomProperties _previousRoom;
     private RoomProperties _currentRoom;
-    private RoomProperties[,] _map;
+    public RoomProperties[,] Map { get; private set; }
 
     private bool _isInit = false;
 
@@ -22,12 +23,12 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
     {
         DontDestroyOnLoad(this.gameObject);
 
-        _map = new RoomProperties[width, height];
+        Map = new RoomProperties[width, height];
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                _map[i, j] = new RoomProperties(i, j, RoomType.Normal);
+                Map[i, j] = new RoomProperties(i, j, RoomType.Normal);
             }
         }
     }
@@ -39,8 +40,8 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
         {
             for (int j = 0; j < height; j++)
             {
-                _map[i, j].isActive = false;
-                _map[i, j].type = RoomType.Normal;
+                Map[i, j].isActive = false;
+                Map[i, j].type = RoomType.Normal;
             }
         }
         _isInit = true;
@@ -74,7 +75,7 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
     public RoomProperties GetRoomProperties(Vector2Int index)
     {
         if (index.y > -1 && index.y < height)
-            return _map[index.x, index.y];
+            return Map[index.x, index.y];
         return null;
     }
 
@@ -88,10 +89,10 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
         for (int i = 0; i < iterateTimes; i++)
         {
             var index = secondRoomXs[Random.Range(0, secondRoomXs.Length)];
-            _map[index, 0].isActive = true;
+            Map[index, 0].isActive = true;
             startRoom.nextRooms.Add(new Vector2Int(index, 0));
 
-            IterateNextRoom(_map[index, 0]);
+            IterateNextRoom(Map[index, 0]);
         }
     }
 
@@ -110,9 +111,9 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
         }
         if (yPrevious == height - 2)
         {
-            _map[width / 2, yPrevious + 1].isActive = true;
+            Map[width / 2, yPrevious + 1].isActive = true;
             previous.nextRooms.Add(new Vector2Int(width / 2, yPrevious + 1));
-            IterateNextRoom(_map[width / 2, yPrevious + 1]);
+            IterateNextRoom(Map[width / 2, yPrevious + 1]);
             previous.type = RoomType.Shop;
             return;
         }
@@ -121,23 +122,23 @@ public class DungeonController : SingletonMonoBehaviour<DungeonController>
         int xRight = xPrevious + 1 < width - 1 ? xPrevious + 1 : width - 1;
         for (int i = 0; i < width; i++)
         {
-            if (_map[i, yPrevious].isActive)
+            if (Map[i, yPrevious].isActive)
             {
-                for (int j = 0; j < _map[i, yPrevious].nextRooms.Count; j++)
+                for (int j = 0; j < Map[i, yPrevious].nextRooms.Count; j++)
                 {
                     if (xPrevious > i)
-                        xLeft = xLeft > _map[i, yPrevious].nextRooms[j].x ? xLeft : _map[i, yPrevious].nextRooms[j].x;
+                        xLeft = xLeft > Map[i, yPrevious].nextRooms[j].x ? xLeft : Map[i, yPrevious].nextRooms[j].x;
                     else if (xPrevious < i)
-                        xRight = xRight < _map[i, yPrevious].nextRooms[j].x ? xRight : _map[i, yPrevious].nextRooms[j].x;
+                        xRight = xRight < Map[i, yPrevious].nextRooms[j].x ? xRight : Map[i, yPrevious].nextRooms[j].x;
                 }
             }
         }
 
         var index = Random.Range(xLeft, xRight + 1);
-        _map[index, yPrevious + 1].isActive = true;
-        _map[index, yPrevious + 1].type = Random.Range(0f, 100f) < 20f ? RoomType.Elite : RoomType.Normal;
+        Map[index, yPrevious + 1].isActive = true;
+        Map[index, yPrevious + 1].type = Random.Range(0f, 100f) < eliteRate * 100f ? RoomType.Elite : RoomType.Normal;
         previous.nextRooms.Add(new Vector2Int(index, yPrevious + 1));
-        IterateNextRoom(_map[index, yPrevious + 1]);
+        IterateNextRoom(Map[index, yPrevious + 1]);
     }
 
     [Button("SpawnRoom")]

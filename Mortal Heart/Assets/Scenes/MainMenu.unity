@@ -424,7 +424,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: CORRUPTED CHALICE
+  m_text: LOST CHALICE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -1420,54 +1420,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 617797761}
   m_CullTransparentMesh: 1
---- !u!1 &637844668
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 637844670}
-  - component: {fileID: 637844669}
-  m_Layer: 0
-  m_Name: UpgradeSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &637844669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 637844668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f877dee43809dfb46a3e479ee9c29c09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthUpgrade: {fileID: 11400000, guid: 1aee450c914952e4194ea949bf49699b, type: 2}
-  sppedUpgrade: {fileID: 11400000, guid: ad78402bc7e05ee43ae822c296142915, type: 2}
-  attackUpgrade: {fileID: 11400000, guid: 5089ba6f9961a1b429e2a65bde52ba2f, type: 2}
-  goldEarnUpgrade: {fileID: 11400000, guid: e22d142ce838ba64f8949eb354fc7871, type: 2}
---- !u!4 &637844670
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 637844668}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &702959740
 GameObject:
   m_ObjectHideFlags: 0
@@ -3816,3 +3768,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f77bdcb91dd1541b066d9d6c1f7a20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &8220752250606311157
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8220752251176970825, guid: c03ddeae37544ec4088735dd92cc7763, type: 3}
+      propertyPath: m_Name
+      value: UpgradeSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 8220752251176970827, guid: c03ddeae37544ec4088735dd92cc7763, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8220752251176970827, guid: c03ddeae37544ec4088735dd92cc7763, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8220752251176970827, guid: c03ddeae37544ec4088735dd92cc7763, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8220752251176970827, guid: c03ddeae37544ec4088735dd92cc7763, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8220752251176970827, guid: c03ddeae37544ec4088735dd92cc7763, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8220752251176970827, guid: c03ddeae37544ec4088735dd92cc7763, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8220752251176970827, guid: c03ddeae37544ec4088735dd92cc7763, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8220752251176970827, guid: c03ddeae37544ec4088735dd92cc7763, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8220752251176970827, guid: c03ddeae37544ec4088735dd92cc7763, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8220752251176970827, guid: c03ddeae37544ec4088735dd92cc7763, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8220752251176970827, guid: c03ddeae37544ec4088735dd92cc7763, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c03ddeae37544ec4088735dd92cc7763, type: 3}

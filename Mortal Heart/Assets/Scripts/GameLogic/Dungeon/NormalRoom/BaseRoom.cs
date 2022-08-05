@@ -53,7 +53,7 @@ public class BaseRoom : MonoBehaviour
     {
 
 #if UNITY_EDITOR
-        Debug.Log("Spawn room:" + currentRoom.index);
+        //Debug.Log("Spawn room:" + currentRoom.index);
 #endif
 
         // spawn pos
@@ -101,7 +101,7 @@ public class BaseRoom : MonoBehaviour
             {
                 var zone = enemyZones[Random.Range(0, enemyZones.Length)];
                 var e = SimplePool.Spawn(
-                    enemies[i].gameObject,
+                    enemies[j].gameObject,
                     zone.position + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)),
                     zone.rotation);
 

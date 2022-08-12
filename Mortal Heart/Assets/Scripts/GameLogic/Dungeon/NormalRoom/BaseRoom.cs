@@ -126,7 +126,7 @@ public class BaseRoom : MonoBehaviour
             {
                 var zone = enemyZones[Random.Range(0, enemyZones.Length)];
                 var e = SimplePool.Spawn(
-                    enemies[i].gameObject,
+                    enemies[j].gameObject,
                     zone.position + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)),
                     zone.rotation);
 
@@ -151,7 +151,7 @@ public class BaseRoom : MonoBehaviour
             _enemyList[0] = elite.GetComponent<BaseEnemyController>();
             _enemyList[0].Init(OnEnemyDeath);
 
-            _reward = GetRandomItemFromList(allBossItems, currentFloor);
+            //_reward = GetRandomItemFromList(allBossItems, currentFloor);
         }
     }
 
@@ -198,11 +198,12 @@ public class BaseRoom : MonoBehaviour
     {
         _aliveEnemyCount--;
         GameController.Instance.playerData.EnemyKilled++;
-        InventorySystem.Instance.UpdatePlayerMoney(10);
+        //InventorySystem.Instance.UpdatePlayerMoney(10);
         if (_aliveEnemyCount <= 0)
         {
             SetNormalState();
-            SimplePool.Spawn(_reward.gameObject, transform.position, Quaternion.identity);
+            if (_reward != null)
+                SimplePool.Spawn(_reward.gameObject, transform.position, Quaternion.identity);
             _player.Agent.enabled = false;
         }
     }

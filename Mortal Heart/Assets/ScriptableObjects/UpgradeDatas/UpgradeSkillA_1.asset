@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f2781f00394634d8881521c50a7874, type: 3}
   m_Name: UpgradeSkillA_1
   m_EditorClassIdentifier: 
-  defaultLevel: 1
+  defaultLevel: 0
   maxLevel: 1
-  level: 0
+  level: 1
   requirements: []
-  icon: {fileID: 21300000, guid: 15407581640b92449bb1c718987d3af0, type: 3}
-  description: Character's skill 1
-  prices: 01000000
+  icon: {fileID: 21300000, guid: 102e1dba41ecc6b4ead7f2fe4a30ad21, type: 3}
+  description: Inncreaser skill 1 set attack's power
+  prices: ee020000
+  buffvalues: []

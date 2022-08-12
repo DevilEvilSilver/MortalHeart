@@ -136,6 +136,7 @@ public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
 
         if (item.stackSize == 0)
         {
+            currentItemIndex = 0;
             inventory.Remove(item);
             _itemDictionary.Remove(item.data.id);
         }

@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: AllEliteEnemyData
   m_EditorClassIdentifier: 
   EnemyList:
-  - enemy: {fileID: 5189316332874381361, guid: 30639d73752a10b4c829039cdffddfa3, type: 3}
+  - enemy: {fileID: 5189316332874381361, guid: 00539f92cfb28294ab67719ff982d9df, type: 3}
     diffValue: 60
+    floor: 1
+  - enemy: {fileID: 5189316332874381361, guid: f9739c634976a7e438c1c9e413439b68, type: 3}
+    diffValue: 40
     floor: 1

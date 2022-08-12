@@ -22,9 +22,14 @@ public class PlayerHitCollider : HitCollider
         var health = coll.GetComponent<IHeath>();
         if (health != null)
         {
-           var totalDamge = damageType.Damage(coll.transform, _damage);
+           var totalDamge = damageType.Damage(coll.transform, _damage );
 
             owner?.OnDealDamage(totalDamge);
         }
+    }
+
+    private float CalculateDamage()
+    {
+        return _damage * (1 + GlobalData.GetBonusAttackPercent());
     }
 }

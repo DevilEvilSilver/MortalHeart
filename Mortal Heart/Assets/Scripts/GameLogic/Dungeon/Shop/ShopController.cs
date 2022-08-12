@@ -32,6 +32,6 @@ public class ShopController : SingletonMonoBehaviour<ShopController>
     public void BuyItem(InventoryItemData data)
     {
         if (InventorySystem.Instance.Add(data))
-            InventorySystem.Instance.UpdatePlayerMoney(data.price);
+            InventorySystem.Instance.UpdatePlayerMoney(-data.price);
     }
 }

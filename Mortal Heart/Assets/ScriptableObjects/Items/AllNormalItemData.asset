@@ -16,3 +16,9 @@ MonoBehaviour:
   - item: {fileID: 3739176176359371307, guid: 34923cf49a117c04387ff24fd3732df8, type: 3}
     type: 0
     floor: 1
+  - item: {fileID: -28111913438205698, guid: 96ba10b73a2214e4f9fabb4286cd2c28, type: 3}
+    type: 0
+    floor: 1
+  - item: {fileID: 5630949051290407580, guid: d8887ba64073b1d49be8e8ec28741d42, type: 3}
+    type: 0
+    floor: 1

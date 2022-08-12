@@ -2687,7 +2687,7 @@ GameObject:
   - component: {fileID: 4735032912117420738}
   m_Layer: 8
   m_Name: MaleCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3105,6 +3105,18 @@ MonoBehaviour:
     - Name: active
       Entry: 4
       Data: 0.166
+    - Name: superUpgrade
+      Entry: 6
+      Data: 
+    - Name: hitCollider
+      Entry: 6
+      Data: 
+    - Name: setDamage
+      Entry: 5
+      Data: false
+    - Name: damage
+      Entry: 4
+      Data: 0
     - Name: 
       Entry: 8
       Data: 

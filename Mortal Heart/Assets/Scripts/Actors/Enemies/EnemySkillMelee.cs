@@ -8,29 +8,30 @@ using Sirenix.OdinInspector;
 public class EnemySkillMelee : BaseEnemyAttackState
 {
     [ValueDropdown("AllAnimations")]
-    [SerializeField] private string moveAnim;
+    [SerializeField] protected string moveAnim;
+    [SerializeField] protected float attackRange;
+    [SerializeField] protected float duration;
 
-    [SerializeField] private HitCollider hitCollider;
-    [SerializeField] private bool setDamage;
+    [SerializeField] protected HitCollider hitCollider;
+    [SerializeField] protected bool setDamage;
     [ShowIf("setDamage")]
-    [SerializeField] private float damage;
-    [SerializeField] private float attackRange;
-    [SerializeField] private float duration;
-    [SerializeField] private float delay;
-    [SerializeField] private float active;
+    [SerializeField] protected float damage;
+    [SerializeField] protected float delay;
+    [SerializeField] protected float active;
 
-    private IDisposable _disposable;
-    private IEnumerator _attackCoroutine;
+    protected IDisposable _disposable;
+    protected IEnumerator _attackCoroutine;
 
-    private Transform _player;
-    private Vector3 _playerPosOffset;
+    protected Transform _player;
+    protected Vector3 _playerPosOffset;
 
     public override void OnEnter()
     {
         base.OnEnter();
 
         _player = UnityEngine.Object.FindObjectOfType<MainCharacterController>().transform;
-        actorController.animator.Play(moveAnim);
+        actorController.animator.CrossFadeInFixedTime(moveAnim, 0.2f);
+
         _attackCoroutine = StartAttack();
         actorController.StartCoroutine(_attackCoroutine);
 
@@ -39,7 +40,7 @@ public class EnemySkillMelee : BaseEnemyAttackState
             , UnityEngine.Random.Range(-attackRange / 2f, attackRange / 2f));
     }
 
-    private IEnumerator StartAttack()
+    protected virtual IEnumerator StartAttack()
     {
         if (_player == null)
         {
@@ -58,7 +59,7 @@ public class EnemySkillMelee : BaseEnemyAttackState
         actorController.Agent.isStopped = true;
         actorController.transform.DOLookAt(_player.position, 0.1f).OnComplete(() =>
         {
-            actorController.animator.Play(attackAnim);
+            actorController.animator.CrossFadeInFixedTime(attackAnim, 0.2f);
 
             _disposable = Observable.Timer(TimeSpan.FromSeconds(delay)).Subscribe(_ =>
             {

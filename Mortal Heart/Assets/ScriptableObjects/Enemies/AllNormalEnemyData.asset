@@ -14,5 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyList:
   - enemy: {fileID: 5189316332874381361, guid: 30639d73752a10b4c829039cdffddfa3, type: 3}
+    diffValue: 20
+    floor: 1
+  - enemy: {fileID: 5189316332874381361, guid: f7590ccccbafd994da3db639a2c71530, type: 3}
+    diffValue: 35
+    floor: 1
+  - enemy: {fileID: 5189316332874381361, guid: 6dc857480f342584a88a8738197f78f4, type: 3}
     diffValue: 25
     floor: 1

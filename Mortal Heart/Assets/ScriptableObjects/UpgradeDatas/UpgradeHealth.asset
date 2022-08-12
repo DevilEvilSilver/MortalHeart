@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultLevel: 1
   maxLevel: 5
-  level: 0
+  level: 5
   requirements: []
-  icon: {fileID: 21300000, guid: 15407581640b92449bb1c718987d3af0, type: 3}
+  icon: {fileID: 21300000, guid: d60e025ad965a6d47a0f8f216d2c0eb5, type: 3}
   description: Increase character's base health
-  prices: 0100000001000000010000000100000001000000
+  prices: c8000000900100005802000020030000e8030000
   buffvalues:
   - 100
   - 125

@@ -6,10 +6,10 @@ using Sirenix.OdinInspector;
 
 public class CharacterSkillMelee : BaseAttackState
 {
-    [SerializeField] private HitCollider hitCollider;
-    [SerializeField] private bool setDamage;
+    [SerializeField] protected HitCollider hitCollider;
+    [SerializeField] protected bool setDamage;
     [ShowIf("setDamage")]
-    [SerializeField] private float damage;
+    [SerializeField] protected float damage;
 
     private IDisposable _disposable;
 

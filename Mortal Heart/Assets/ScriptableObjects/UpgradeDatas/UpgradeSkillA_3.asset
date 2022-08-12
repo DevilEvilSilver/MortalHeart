@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultLevel: 0
   maxLevel: 1
-  level: 0
+  level: 1
   requirements:
   - {fileID: 11400000, guid: 4c58310d6e2e33644a76cf5d55b87300, type: 2}
-  icon: {fileID: 21300000, guid: 15407581640b92449bb1c718987d3af0, type: 3}
-  description: Character's skill 1 combo 3
-  prices: 01000000
+  icon: {fileID: 21300000, guid: 0fe7c3c88f82e554c89aba1506c6df55, type: 3}
+  description: Unlock character's skill 1 combo 3
+  prices: a00f0000
+  buffvalues: []

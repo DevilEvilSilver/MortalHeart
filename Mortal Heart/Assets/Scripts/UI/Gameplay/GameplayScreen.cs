@@ -42,7 +42,7 @@ public class GameplayScreen : SingletonMonoBehaviour<GameplayScreen>
     public void OnPlay()
     {
         pausePanel.SetActive(false);
-        GameController.Instance.PauseGame(true);
+        GameController.Instance.PauseGame(false);
     }
 
     public void OnHPChange(float value, float max, bool isAnim)

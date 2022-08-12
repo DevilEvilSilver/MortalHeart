@@ -21,7 +21,10 @@ public class LukeController : MainCharacterController
             ChangeMana(-Time.deltaTime * 5f);
 
             if (playerData.Mana <= 0f)
+            {
+                GlobalData.BonusAttackPercent -= 0.5f;
                 isUsingSuper = false;
+            }
         }
     }
 
@@ -35,6 +38,8 @@ public class LukeController : MainCharacterController
     {
         isUsingSuper = true;
         canTakeDamage = false;
+
+        GlobalData.BonusAttackPercent += 0.5f;
     }
 
     public override void ToggleInvulnerable(bool isInvulnerable)
@@ -47,17 +52,5 @@ public class LukeController : MainCharacterController
     public override void OnDealDamage(float damage)
     {
         ChangeMana(damage / 10f);
-    }
-
-    public void ChangeMana(float change, bool isAnim = true)
-    {
-        if (fsm.currentState == deathState) return;
-
-        playerData.Mana += change;
-        if (playerData.Mana > 100F)
-            playerData.Mana = 100F;
-        else if (playerData.Mana < 0f)
-            playerData.Mana = 0f;
-        GameplayScreen.Instance.OnManaChange(playerData.Mana, 100F, isAnim);
     }
 }

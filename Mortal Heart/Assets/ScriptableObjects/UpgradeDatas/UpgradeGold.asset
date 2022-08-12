@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultLevel: 1
   maxLevel: 3
-  level: 0
+  level: 2
   requirements: []
-  icon: {fileID: 21300000, guid: 15407581640b92449bb1c718987d3af0, type: 3}
+  icon: {fileID: 21300000, guid: b293ab2dfb69ab04f938683a5920ebe2, type: 3}
   description: Increase gold received from enemies
-  prices: 010000000100000001000000
+  prices: 64000000c8000000f4010000
   buffvalues:
   - 0
   - 0.2

@@ -8,4 +8,11 @@
         public const string SHOP = "Shop";
         public const string RESULT = "Result";
     }
+
+    public class TagManager
+    {
+        public static readonly string TAG_UNTAGGED = "Untagged";
+        public static readonly string TAG_PLAYER = "Player";
+        public static readonly string TAG_ENEMY = "Enemy";
+    }
 }

@@ -429,6 +429,18 @@ public class MainCharacterController : SerializedMonoBehaviour, IHeath
         GameplayScreen.Instance.OnHPChange(playerData.Hp, baseMaxHealth, isAnim);
     }
 
+    public void ChangeMana(float change, bool isAnim = true)
+    {
+        if (fsm.currentState == deathState) return;
+
+        playerData.Mana += change;
+        if (playerData.Mana > 100F)
+            playerData.Mana = 100F;
+        else if (playerData.Mana < 0f)
+            playerData.Mana = 0f;
+        GameplayScreen.Instance.OnManaChange(playerData.Mana, 100F, isAnim);
+    }
+
     public void UpdateMaxHealth()
     {
         baseMaxHealth = GlobalData.GetMaxHealth();

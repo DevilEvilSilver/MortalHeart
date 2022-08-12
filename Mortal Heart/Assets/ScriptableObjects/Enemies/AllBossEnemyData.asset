@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: AllBossEnemyData
   m_EditorClassIdentifier: 
   EnemyList:
-  - enemy: {fileID: 5189316332874381361, guid: 30639d73752a10b4c829039cdffddfa3, type: 3}
+  - enemy: {fileID: 5189316332874381361, guid: 802714a659ec15f4fab62766d156b1de, type: 3}
     diffValue: 100
     floor: 1

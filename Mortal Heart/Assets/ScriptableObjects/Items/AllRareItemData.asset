@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: AllRareItemData
   m_EditorClassIdentifier: 
   ItemList:
-  - item: {fileID: 3739176176359371307, guid: 34923cf49a117c04387ff24fd3732df8, type: 3}
+  - item: {fileID: 8492801494798578826, guid: 6ad03d7fb183e7b428c97bbc0945462d, type: 3}
+    type: 1
+    floor: 1
+  - item: {fileID: 6441784055332678217, guid: b6ae643b7c454ca499d65dc686b516bd, type: 3}
     type: 1
     floor: 1

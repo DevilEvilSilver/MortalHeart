@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultLevel: 1
   maxLevel: 3
-  level: 0
+  level: 3
   requirements: []
-  icon: {fileID: 21300000, guid: 15407581640b92449bb1c718987d3af0, type: 3}
+  icon: {fileID: 21300000, guid: e4c32f8e71d929f4da5f07d29af8093d, type: 3}
   description: Increase character's base speed
-  prices: 010000000100000001000000
+  prices: c800000090010000bc020000
   buffvalues:
   - 4
   - 4.5

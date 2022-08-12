@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultLevel: 1
   maxLevel: 5
-  level: 0
+  level: 2
   requirements: []
-  icon: {fileID: 21300000, guid: 15407581640b92449bb1c718987d3af0, type: 3}
+  icon: {fileID: 21300000, guid: 2c312144aa2562544b0e2f55d757028d, type: 3}
   description: Increase character's attack damage
-  prices: 0100000001000000010000000100000001000000
+  prices: c8000000900100005802000020030000e8030000
   buffvalues:
   - 0
   - 0.2

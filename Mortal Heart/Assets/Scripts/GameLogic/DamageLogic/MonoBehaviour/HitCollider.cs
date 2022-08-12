@@ -19,14 +19,15 @@ public class HitCollider : SerializedMonoBehaviour
         _damage = 0;
     }
 
-    public virtual void Init(float damage, float activeTime)
+    public virtual void Init(float damage, float activeTime = -1f)
     {
         _damage = damage;
 
-        _disposable = Observable.Timer(TimeSpan.FromSeconds(activeTime)).Subscribe(_ =>
-        {
-            gameObject.SetActive(false);
-        });
+        if (activeTime > 0f)
+            _disposable = Observable.Timer(TimeSpan.FromSeconds(activeTime)).Subscribe(_ =>
+            {
+                gameObject.SetActive(false);
+            });
     }
 
     public virtual void OnTriggerEnter(Collider coll)
@@ -52,7 +53,7 @@ public class HitCollider : SerializedMonoBehaviour
     {
         if ((shieldLayer.value & (1 << coll.gameObject.layer)) == 0) return;
         {
-            Debug.Log("Shielded");
+            //Debug.Log("Shielded");
             gameObject.SetActive(false);
             _disposable?.Dispose();
             return;

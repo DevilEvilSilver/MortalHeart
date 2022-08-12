@@ -4,11 +4,11 @@ public class OneTimeDamage : IDamage
 {
     public float Damage(Transform collider, float damage)
     {
-        IHeath heath;
-        if (collider == null || (heath = collider.GetComponent<IHeath>()) == null)
+        IHeath health;
+        if (collider == null || (health = collider.GetComponent<IHeath>()) == null)
             return -1f;
 
-        heath.TakeDamage(damage);
+        health.TakeDamage(damage);
         return damage;
     }
 

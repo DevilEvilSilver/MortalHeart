@@ -58,3 +58,12 @@ The following packages were updated:
   com.unity.ide.rider from version 2.0.7 to 3.0.14
   com.unity.render-pipelines.universal from version 10.8.1 to 12.1.6
   com.unity.timeline from version 1.4.8 to 1.6.4
+
+=== Sat Aug 13 00:34:48 2022
+
+Packages were changed.
+Update Mode: mergeDefaultDependencies
+
+The following packages were added:
+  com.unity.2d.sprite@1.0.0
+  com.unity.shadergraph@7.3.1

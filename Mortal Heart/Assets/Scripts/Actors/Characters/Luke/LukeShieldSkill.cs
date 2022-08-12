@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 public class LukeShieldSkill : BaseAttackState
 {
     [SerializeField] private Shield shield;
+    [SerializeField] private UpgradeData shieldUpgrade;
     [SerializeField] private float parryWindomTime;
 
     private bool _isParry;
@@ -22,7 +23,7 @@ public class LukeShieldSkill : BaseAttackState
     {
         if (!_ctx.action.IsPressed())
         {
-            if (_isParry)
+            if (_isParry && shieldUpgrade != null && shieldUpgrade.level > 0)
                 actorController.ChainNextCombo(_ctx);
             else
                 actorController.ChangeToIdle();

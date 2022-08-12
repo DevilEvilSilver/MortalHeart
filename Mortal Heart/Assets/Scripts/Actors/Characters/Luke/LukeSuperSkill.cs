@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 public class LukeSuperSkill : BaseAttackState
 {
     [SerializeField] private UpgradeData superUpgrade;
-    [SerializeField] protected HitCollider hitCollider;
+    [SerializeField] protected IDamage superDamage;
     [SerializeField] protected bool setDamage;
     [ShowIf("setDamage")]
     [SerializeField] protected float damage;
@@ -19,11 +19,7 @@ public class LukeSuperSkill : BaseAttackState
         {
             Observable.Timer(TimeSpan.FromSeconds(delay)).Subscribe(_ =>
             {
-                hitCollider.gameObject.SetActive(true);
-                if (setDamage)
-                {
-                    hitCollider.Init(damage, active);
-                }
+                superDamage.DamageOnPosition(actorController.transform.position, damage);
             });
         }
 

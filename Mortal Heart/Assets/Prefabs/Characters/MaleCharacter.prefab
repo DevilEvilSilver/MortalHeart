@@ -2730,7 +2730,9 @@ MonoBehaviour:
     - {fileID: 9182272692990830746}
     - {fileID: 11400000, guid: 1abd75646dec4044fa24bada5cb9605e, type: 2}
     - {fileID: 7262591662529606143}
+    - {fileID: 11400000, guid: 0ef541c4d1611264dad3bfb2d8e85485, type: 2}
     - {fileID: 7534816310373779220}
+    - {fileID: 11400000, guid: bab7ad60b23fca84c98b068e3222721d, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -3021,6 +3023,9 @@ MonoBehaviour:
     - Name: shield
       Entry: 10
       Data: 4
+    - Name: shieldUpgrade
+      Entry: 10
+      Data: 5
     - Name: parryWindomTime
       Entry: 4
       Data: 0.25
@@ -3056,7 +3061,7 @@ MonoBehaviour:
       Data: 0.2
     - Name: hitCollider
       Entry: 10
-      Data: 5
+      Data: 6
     - Name: setDamage
       Entry: 5
       Data: true
@@ -3106,17 +3111,32 @@ MonoBehaviour:
       Entry: 4
       Data: 0.166
     - Name: superUpgrade
-      Entry: 6
+      Entry: 10
+      Data: 7
+    - Name: superDamage
+      Entry: 7
+      Data: 16|AreaDamage, Assembly-CSharp
+    - Name: radius
+      Entry: 4
+      Data: 1
+    - Name: maskLayer
+      Entry: 7
+      Data: UnityEngine.LayerMask, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 1024
+    - Name: 
+      Entry: 8
       Data: 
-    - Name: hitCollider
-      Entry: 6
+    - Name: 
+      Entry: 8
       Data: 
     - Name: setDamage
       Entry: 5
-      Data: false
+      Data: true
     - Name: damage
       Entry: 4
-      Data: 0
+      Data: 150
     - Name: 
       Entry: 8
       Data: 

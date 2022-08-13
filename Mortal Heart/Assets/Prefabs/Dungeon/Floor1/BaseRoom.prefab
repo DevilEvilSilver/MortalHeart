@@ -1494,7 +1494,7 @@ MonoBehaviour:
   - {fileID: 7987022762300747385}
   - {fileID: 8054745038612884491}
   - {fileID: 3419153031225329728}
-  allNormalEnemies: {fileID: 11400000, guid: e48e64e83b2f39b4ea0f80cabf1650c7, type: 2}
+  allNormalEnemies: {fileID: 11400000, guid: 6fe9680384e00494ca17b987a702fbbd, type: 2}
   allRareEnemies: {fileID: 11400000, guid: 813e221a859d31d409c0d58f088e3ebc, type: 2}
   allBossEnemies: {fileID: 11400000, guid: 29019bf57828987469d9a5e47f865c24, type: 2}
   allNormalItems: {fileID: 11400000, guid: 1c319c8dc3d6e264aa6a07dbbbf5bd1a, type: 2}

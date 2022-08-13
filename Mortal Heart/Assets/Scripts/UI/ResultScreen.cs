@@ -22,6 +22,9 @@ public class ResultScreen : MonoBehaviour
     public TMP_Text killedText;
     public TMP_Text scoreText;
 
+    public AudioClip win;
+    public AudioClip lose;
+
     private void Awake()
     {
         GameController.Instance.SaveData();
@@ -29,10 +32,12 @@ public class ResultScreen : MonoBehaviour
         if (playerData.Hp > 0f)
         {
             resultText.text = WIN;
+            AudioManager.Instance.PlayMusic(win);
         }
         else
         {
             resultText.text = LOSE;
+            AudioManager.Instance.PlayMusic(lose);
         }
 
         TimeSpan time = TimeSpan.FromSeconds(playerData.PlayTime);

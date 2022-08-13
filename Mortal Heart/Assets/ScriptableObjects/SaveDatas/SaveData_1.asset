@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SaveData_1
   m_EditorClassIdentifier: 
   isNewSaveData: 1
-  playTime: 154.31009
-  experience: 100
-  enemyKilled: 10
+  playTime: 0
+  experience: 0
+  enemyKilled: 0
   upgradesLevel:
   - upgrade: {fileID: 11400000, guid: 1aee450c914952e4194ea949bf49699b, type: 2}
     level: 1

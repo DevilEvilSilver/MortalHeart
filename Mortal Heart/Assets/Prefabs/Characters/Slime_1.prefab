@@ -516,6 +516,7 @@ MonoBehaviour:
   shieldLayer:
     serializedVersion: 2
     m_Bits: 8192
+  sfx: {fileID: 8300000, guid: ba4a24aa78a7b4949bc106ac2b705737, type: 3}
 --- !u!1 &6166718392210159977
 GameObject:
   m_ObjectHideFlags: 0

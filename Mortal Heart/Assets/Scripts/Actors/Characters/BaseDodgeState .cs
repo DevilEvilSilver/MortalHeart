@@ -21,7 +21,7 @@ public class BaseDodgeState : BaseCharacterState
     {
         base.OnEnter();
         isLock = true;
-        actorController.ToggleInvulnerable(true);
+        //actorController.ToggleInvulnerable(true);
         _timeSinceInit = 0f;
         isInitDir = false;
         _isComboChained = false;
@@ -43,7 +43,7 @@ public class BaseDodgeState : BaseCharacterState
 
         if (_timeSinceInit > iframe)
         {
-            actorController.ToggleInvulnerable(false);
+            //actorController.ToggleInvulnerable(false);
             if (_timeSinceInit > duration)
             {
                 isLock = false;

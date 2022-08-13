@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f2781f00394634d8881521c50a7874, type: 3}
   m_Name: UpgradeSkillC
   m_EditorClassIdentifier: 
-  defaultLevel: 1
+  defaultLevel: 0
   maxLevel: 1
   level: 1
   requirements: []

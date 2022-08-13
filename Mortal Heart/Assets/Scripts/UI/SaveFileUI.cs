@@ -61,6 +61,10 @@ public class SaveFileUI : MonoBehaviour
     {
         saveData.LoadData();
         GameController.Instance.LoadSaveData(saveData); 
-        SceneManager.LoadScene(GameUtils.SceneName.UPGRADE_CHARACTER, LoadSceneMode.Single);
+
+        if (saveData.playTime > 0f)
+            SceneManager.LoadScene(GameUtils.SceneName.UPGRADE_CHARACTER, LoadSceneMode.Single);
+        else
+            SceneManager.LoadScene(GameUtils.SceneName.TUTORIAL, LoadSceneMode.Single);
     }
 }

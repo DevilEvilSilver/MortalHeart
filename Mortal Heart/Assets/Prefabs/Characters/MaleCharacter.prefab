@@ -1577,6 +1577,7 @@ MonoBehaviour:
   shieldLayer:
     serializedVersion: 2
     m_Bits: 0
+  sfx: {fileID: 8300000, guid: ba4a24aa78a7b4949bc106ac2b705737, type: 3}
   owner: {fileID: 759223952834186112}
 --- !u!65 &4376368997453403061
 BoxCollider:
@@ -2018,6 +2019,7 @@ MonoBehaviour:
   shieldLayer:
     serializedVersion: 2
     m_Bits: 0
+  sfx: {fileID: 8300000, guid: ba4a24aa78a7b4949bc106ac2b705737, type: 3}
   owner: {fileID: 759223952834186112}
 --- !u!65 &5326149912394901732
 BoxCollider:

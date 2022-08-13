@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c3a877229e98694abf435bf046c9def, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allBGMData: {fileID: 11400000, guid: 92c4fa2a68402614ea32ba94b50933f8, type: 2}
   currentGameState: 0
   currSaveData: {fileID: 11400000, guid: 31401d5a810b3e34d9ce13b4be0d1aed, type: 2}
   playerData: {fileID: 11400000, guid: 7ac2cfdee0b9b734b94572fd1c9967e4, type: 2}

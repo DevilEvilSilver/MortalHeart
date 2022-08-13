@@ -15,6 +15,7 @@ public class GameplayScreen : SingletonMonoBehaviour<GameplayScreen>
 
     public Image manaProgress;
 
+    public Sprite itemNone;
     public Image itemIcon;
     public TMP_Text itemAmount;
 
@@ -37,11 +38,14 @@ public class GameplayScreen : SingletonMonoBehaviour<GameplayScreen>
     private void OnPause(InputAction.CallbackContext ctx)
     {
         pausePanel.SetActive(!pausePanel.activeInHierarchy);
+        if (pausePanel.activeInHierarchy == true)
+            optionPanel.SetActive(false);
     }
 
     public void OnPlay()
     {
         pausePanel.SetActive(false);
+        optionPanel.SetActive(false);
         GameController.Instance.PauseGame(false);
     }
 
@@ -67,7 +71,7 @@ public class GameplayScreen : SingletonMonoBehaviour<GameplayScreen>
 
     public void OnNoneItem()
     {
-        itemIcon.sprite = null;
+        itemIcon.sprite = itemNone;
         itemAmount.gameObject.SetActive(false);
     }
 

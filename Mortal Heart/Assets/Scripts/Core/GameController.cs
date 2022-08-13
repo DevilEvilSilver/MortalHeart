@@ -10,6 +10,7 @@ public enum GameState
 
 public class GameController : SingletonMonoBehaviour<GameController>
 {
+    public AllBGMData allBGMData;
     public GameState currentGameState;
     public SaveData currSaveData;
     public PlayerData playerData;
@@ -46,6 +47,7 @@ public class GameController : SingletonMonoBehaviour<GameController>
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
         InputManager.Instance.pauseAction.performed -= OnPausePerformed;
+        allBGMData.PlayBGM(scene.name);
 
         Time.timeScale = 1f;
         if (scene.name.Equals(GameUtils.SceneName.GAMEPLAY))

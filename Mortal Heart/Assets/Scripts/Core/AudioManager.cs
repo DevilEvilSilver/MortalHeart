@@ -54,8 +54,8 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
             || sfxVolume < 0 || sfxVolume > 10)
             return;
 
-        bgmSource.volume = bgmVolume / MAX_VOLUME;
-        sfxSource.volume = sfxVolume / MAX_VOLUME;
+        bgmSource.volume = (float)bgmVolume / MAX_VOLUME;
+        sfxSource.volume = (float)sfxVolume / MAX_VOLUME;
 
         configData.SaveVolume(bgmVolume, sfxVolume);
     }

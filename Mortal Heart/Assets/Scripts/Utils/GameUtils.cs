@@ -7,6 +7,7 @@
         public const string GAMEPLAY = "GamePlay";
         public const string SHOP = "Shop";
         public const string RESULT = "Result";
+        public const string TUTORIAL = "Tutorial";
     }
 
     public class TagManager

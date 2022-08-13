@@ -60,6 +60,8 @@ public class BaseBulletBehaviour : HitCollider
         var health = coll.GetComponent<IHeath>();
         if (health != null)
         {
+            AudioManager.Instance.PlaySoundEffect(sfx);
+
             damageType.Damage(coll.transform, _damage);
             Despawn();
         }
@@ -69,6 +71,8 @@ public class BaseBulletBehaviour : HitCollider
     {
         if ((shieldLayer.value & (1 << coll.gameObject.layer)) == 0) return;
         {
+            AudioManager.Instance.PlaySoundEffect(sfx);
+
             Despawn();
             _disposable?.Dispose();
             return;

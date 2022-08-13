@@ -10,6 +10,7 @@ public class HitCollider : SerializedMonoBehaviour
     [SerializeField] protected LayerMask effectLayer;
     [SerializeField] protected LayerMask shieldLayer;
     [SerializeField] protected IDamage damageType;
+    [SerializeField] protected AudioClip sfx;
 
     protected float _damage;
     protected IDisposable _disposable;
@@ -45,7 +46,9 @@ public class HitCollider : SerializedMonoBehaviour
         var health = coll.GetComponent<IHeath>();
         if (health != null)
         {
-           damageType.Damage(coll.transform, _damage);
+            AudioManager.Instance.PlaySoundEffect(sfx);
+
+            damageType.Damage(coll.transform, _damage);
         }
     }
 
@@ -54,6 +57,8 @@ public class HitCollider : SerializedMonoBehaviour
         if ((shieldLayer.value & (1 << coll.gameObject.layer)) == 0) return;
         {
             //Debug.Log("Shielded");
+            AudioManager.Instance.PlaySoundEffect(sfx);
+
             gameObject.SetActive(false);
             _disposable?.Dispose();
             return;

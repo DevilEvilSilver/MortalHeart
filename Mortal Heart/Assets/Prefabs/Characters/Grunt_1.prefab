@@ -161,6 +161,7 @@ MonoBehaviour:
   shieldLayer:
     serializedVersion: 2
     m_Bits: 8192
+  sfx: {fileID: 8300000, guid: ba4a24aa78a7b4949bc106ac2b705737, type: 3}
 --- !u!65 &4962136492635253629
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -768,6 +769,7 @@ MonoBehaviour:
   shieldLayer:
     serializedVersion: 2
     m_Bits: 8192
+  sfx: {fileID: 8300000, guid: ba4a24aa78a7b4949bc106ac2b705737, type: 3}
 --- !u!65 &1886216316334784803
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1261,7 +1263,7 @@ MonoBehaviour:
       Data: true
     - Name: damage
       Entry: 4
-      Data: 50
+      Data: 70
     - Name: delay
       Entry: 4
       Data: 0.4
@@ -1315,7 +1317,7 @@ MonoBehaviour:
       Data: true
     - Name: damage2
       Entry: 4
-      Data: 30
+      Data: 40
     - Name: delay2
       Entry: 4
       Data: 0.7

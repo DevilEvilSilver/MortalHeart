@@ -424,7 +424,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: LOST CHALICE
+  m_text: DRAGON SLAYER
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -1110,6 +1110,63 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1001 &379098059
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4715679793867933841, guid: 91bcbb3e51f75c74fade672d187145c9, type: 3}
+      propertyPath: m_Name
+      value: InventorySystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715679793867933871, guid: 91bcbb3e51f75c74fade672d187145c9, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715679793867933871, guid: 91bcbb3e51f75c74fade672d187145c9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715679793867933871, guid: 91bcbb3e51f75c74fade672d187145c9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715679793867933871, guid: 91bcbb3e51f75c74fade672d187145c9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715679793867933871, guid: 91bcbb3e51f75c74fade672d187145c9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715679793867933871, guid: 91bcbb3e51f75c74fade672d187145c9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715679793867933871, guid: 91bcbb3e51f75c74fade672d187145c9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715679793867933871, guid: 91bcbb3e51f75c74fade672d187145c9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715679793867933871, guid: 91bcbb3e51f75c74fade672d187145c9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715679793867933871, guid: 91bcbb3e51f75c74fade672d187145c9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715679793867933871, guid: 91bcbb3e51f75c74fade672d187145c9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 91bcbb3e51f75c74fade672d187145c9, type: 3}
 --- !u!1 &459762244
 GameObject:
   m_ObjectHideFlags: 0
@@ -3422,17 +3479,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'Option '
       objectReference: {fileID: 0}
+    - target: {fileID: 3630775447079255360, guid: b75b8fbbc6aa9b546a2ca6b0d6e46202, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3979911828005702304, guid: b75b8fbbc6aa9b546a2ca6b0d6e46202, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4625401485401585224, guid: b75b8fbbc6aa9b546a2ca6b0d6e46202, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1870274320}
-    - target: {fileID: 4625401485401585224, guid: b75b8fbbc6aa9b546a2ca6b0d6e46202, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnOptionQuit
+    - target: {fileID: 7757250501918959392, guid: b75b8fbbc6aa9b546a2ca6b0d6e46202, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4625401485401585224, guid: b75b8fbbc6aa9b546a2ca6b0d6e46202, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MainMenuScreen, Assembly-CSharp
+    - target: {fileID: 7896413090240212250, guid: b75b8fbbc6aa9b546a2ca6b0d6e46202, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920608011814950808, guid: b75b8fbbc6aa9b546a2ca6b0d6e46202, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b75b8fbbc6aa9b546a2ca6b0d6e46202, type: 3}

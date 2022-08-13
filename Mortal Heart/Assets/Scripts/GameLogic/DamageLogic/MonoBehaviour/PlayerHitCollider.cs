@@ -14,6 +14,8 @@ public class PlayerHitCollider : HitCollider
 
         if ((shieldLayer.value & (1 << coll.gameObject.layer)) != 0)
         {
+            AudioManager.Instance.PlaySoundEffect(sfx);
+
             gameObject.SetActive(false);
             _disposable?.Dispose();
             return;
@@ -22,7 +24,9 @@ public class PlayerHitCollider : HitCollider
         var health = coll.GetComponent<IHeath>();
         if (health != null)
         {
-           var totalDamge = damageType.Damage(coll.transform, _damage );
+            AudioManager.Instance.PlaySoundEffect(sfx);
+
+            var totalDamge = damageType.Damage(coll.transform, _damage );
 
             owner?.OnDealDamage(totalDamge);
         }

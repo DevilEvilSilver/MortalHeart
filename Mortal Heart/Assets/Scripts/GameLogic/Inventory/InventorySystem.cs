@@ -8,6 +8,9 @@ public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
 {
     private readonly int maxUsableCapacity = 5;
 
+    public AudioClip item;
+    public AudioClip coin;
+
     private Dictionary<string, InventoryItemStack> _itemDictionary;
     public List<InventoryItemStack> inventory { get; private set; }
     public int money { get; private set; }
@@ -92,6 +95,8 @@ public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
         {
             if (value.AddToStack())
             {
+                AudioManager.Instance.PlaySoundEffect(item);
+
                 itemData.OnAdd();
                 UpdateItemData();
                 return true;
@@ -102,6 +107,8 @@ public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
             InventoryItemStack newItem = new InventoryItemStack(itemData);
             inventory.Add(newItem);
             _itemDictionary.Add(itemData.id, newItem);
+
+            AudioManager.Instance.PlaySoundEffect(item);
 
             itemData.OnAdd();
             UpdateItemData();
@@ -140,6 +147,8 @@ public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
             inventory.Remove(item);
             _itemDictionary.Remove(item.data.id);
         }
+        AudioManager.Instance.PlaySoundEffect(this.item);
+
         item.data.OnUsed();
         UpdateItemData();
     }
@@ -147,6 +156,8 @@ public class InventorySystem : SingletonMonoBehaviour<InventorySystem>
     public void UpdatePlayerMoney(int change)
     {
         money += change;
+        if (change != 0)
+            AudioManager.Instance.PlaySoundEffect(coin);
 
         if (SceneManager.GetActiveScene().name.Equals(GameUtils.SceneName.GAMEPLAY))
         {

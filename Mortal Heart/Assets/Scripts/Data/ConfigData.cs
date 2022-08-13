@@ -11,7 +11,8 @@ public class ConfigData : ScriptableObject
     public int bgmVolume;
     public int sfxVolume;
     [Header("Graphic")]
-    public Resolution resolution;
+    public float resolutionWidth;
+    public float resolutionHeight;
     public bool isFullscreen;
 
     private void Awake()
@@ -52,21 +53,28 @@ public class ConfigData : ScriptableObject
     {
         this.bgmVolume = bgmVolume;
         this.sfxVolume = sfxVolume;
+
+        SaveToFile();
     }
 
     public void SaveGraphic(Resolution resolution, bool isFullscreen)
     {
-        this.resolution = resolution;
+        this.resolutionWidth = resolution.width;
+        this.resolutionHeight = resolution.height;
         this.isFullscreen = isFullscreen;
+
+        SaveToFile();
     }
 
     public void ResetData()
     {
         bgmVolume = 5;
         sfxVolume = 5;
-        var resolutions = Screen.resolutions;
-        resolution = resolutions[resolutions.Length - 1];
-        isFullscreen = true;
+        var resolutions = Screen.currentResolution;
+        resolutionWidth = resolutions.width;
+        resolutionHeight = resolutions.height;
+
+        isFullscreen = Screen.fullScreen;
     }
 
 }

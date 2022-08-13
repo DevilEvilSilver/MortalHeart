@@ -569,6 +569,8 @@ MonoBehaviour:
   moneyText: {fileID: 1287335703}
   killedText: {fileID: 856197063}
   scoreText: {fileID: 549233207}
+  win: {fileID: 8300000, guid: ce41a42da8a7d17468bc9c497e202693, type: 3}
+  lose: {fileID: 8300000, guid: f8d096aba5eed664e9cd4f50dd2c4c86, type: 3}
 --- !u!1 &429017197
 GameObject:
   m_ObjectHideFlags: 0
@@ -1860,7 +1862,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.1, y: 0}
+  m_AnchoredPosition: {x: -12.099976, y: 0}
   m_SizeDelta: {x: 80, y: -70}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1337019201

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b7f53cd9e6b7344d927e2e9ea10fe86, type: 3}
+  m_Name: AllBGMData
+  m_EditorClassIdentifier: 
+  ItemList:
+  - clip: {fileID: 8300000, guid: 2177f2b64a5104d4fa3c6804ad9db94b, type: 3}
+    scene: UpgradeCharacter
+  - clip: {fileID: 8300000, guid: 2177f2b64a5104d4fa3c6804ad9db94b, type: 3}
+    scene: MainMenu
+  - clip: {fileID: 8300000, guid: 39dc9524613647d4da48cbd975705cf4, type: 3}
+    scene: Shop
+  - clip: {fileID: 8300000, guid: bfc1555cfcbfe8844ad57fe2f6ad607e, type: 3}
+    scene: GamePlay

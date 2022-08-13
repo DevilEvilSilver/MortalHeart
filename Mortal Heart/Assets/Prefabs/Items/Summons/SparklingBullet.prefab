@@ -4901,6 +4901,7 @@ MonoBehaviour:
   shieldLayer:
     serializedVersion: 2
     m_Bits: 512
+  sfx: {fileID: 8300000, guid: ba4a24aa78a7b4949bc106ac2b705737, type: 3}
   startSpeed: 12
   gojEfxDestroyBulelt: {fileID: 5459322373300372119, guid: c27b3eea5a53dea40963d97a1b075637, type: 3}
   direction: {x: 0, y: 0, z: 0}

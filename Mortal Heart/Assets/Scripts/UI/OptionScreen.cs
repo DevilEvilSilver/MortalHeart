@@ -54,6 +54,10 @@ public class OptionScreen : MonoBehaviour
         AudioManager.Instance.ApplyConfig((int)bgmSlider.value, (int)sfxSlider.value);
         GraphicManager.Instance.ApplyConfig(fullscreen.isOn);
 
+        _originalBGMVolume = bgmSlider.value;
+        _originalSFXVolume = sfxSlider.value;
+        _originalResolution = resolution.text;
+        _isFullScreen = fullscreen.isOn;
         applyBtn.interactable = false;
     }
 
